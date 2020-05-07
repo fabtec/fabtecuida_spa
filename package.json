@@ -42,7 +42,10 @@
   },
   "standard": {
     "ignore": [
-      "build/*"
+      "build/*",
+      "*.test.js",
+      "serviceWorker.js",
+      "setupTests.js"
     ]
   }
 }
