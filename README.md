@@ -9,6 +9,7 @@ yarn install
 yarn start
 ```
 
-Resources:
+### Resources
 
 * [Create React App docs](README_CREATE_REACT_APP.md)
+* [tabler-react](http://tabler-react.com/documentation/)
