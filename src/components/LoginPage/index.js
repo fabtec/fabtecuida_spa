@@ -20,7 +20,7 @@ function LoginPage () {
         setIsErrorPresent(false)
         const { access, refresh } = res.data
         Api.setTokens({ access, refresh })
-        window.location.href = '/dashboard'
+        window.location.href = window.location.pathname
       })
       .catch(() => {
         setIsErrorPresent(true)
@@ -35,7 +35,7 @@ function LoginPage () {
 
     return (
       <Alert type='danger' hide={isErrorPresent}>
-        Credenciales invalidas
+        credenciales invalidas
       </Alert>
     )
   }
