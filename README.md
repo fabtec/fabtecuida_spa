@@ -7,6 +7,9 @@
 ```
 yarn install
 yarn start
+
+# apply linter
+npm run lint-fix
 ```
 
 ### Resources
