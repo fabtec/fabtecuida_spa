@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import * as R from 'ramda';
-import * as RA from 'ramda-adjunct';
+import React, { useState, useEffect } from 'react'
+import * as RA from 'ramda-adjunct'
 import './App.css'
 import 'tabler-react/dist/Tabler.css'
 import {
@@ -12,18 +11,21 @@ import Api from './services/api'
 import LoadingPage from './components/LoadingPage'
 import LoginPage from './components/LoginPage'
 import DashboardPage from './components/DashboardPage'
+import NewOrderPage from './components/NewOrderPage'
 
 function App () {
   const [isLoggedIn, setIsLoggedIn] = useState(null)
 
-  Api.verifyUser()
-    .then((isValid) => {
-      setIsLoggedIn(isValid)
-    })
-    .catch((isValid) => {
-      console.log('---')
-      setIsLoggedIn(isValid)
-    })
+  useEffect(() => {
+    Api.verifyUser()
+      .then((isValid) => {
+        setIsLoggedIn(isValid)
+      })
+      .catch((isValid) => {
+        console.log('---')
+        setIsLoggedIn(isValid)
+      })
+  }, [])
 
   const renderRoot = () => {
     if (RA.isNilOrEmpty(isLoggedIn)) {
@@ -41,7 +43,10 @@ function App () {
     return (
       <Router>
         <Switch>
-          <Route path='/dashboard'>
+          <Route path='/orders/new'>
+            <NewOrderPage />
+          </Route>
+          <Route path={['/', '/dashboard']}>
             <DashboardPage />
           </Route>
         </Switch>
