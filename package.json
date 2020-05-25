@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "static_server": "./node_modules/.bin/serve -s build -l 80",
+    "static_server": "./node_modules/.bin/serve -s build -l 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
