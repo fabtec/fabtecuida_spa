@@ -1,8 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-// TODO add env vars
-const API_HOST = 'http://localhost:8000'
+const API_HOST = process.env.REACT_APP_API_HOST || 'http://localhost:8000'
 
 export default class Api {
   static setTokens ({ access, refresh }) {
