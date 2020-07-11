@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import * as R from 'ramda'
-import { Grid, Card, Form, Button } from 'tabler-react'
+import { Row, Form, Button } from 'react-bootstrap';
 import Api from '../../services/api'
 
 function NewOrderPage () {
@@ -29,28 +29,47 @@ function NewOrderPage () {
   }
 
   return (
-    <Grid.Row cards alignItems='center'>
-      <Grid.Col>
-        <Card>
-          <Card.Header>
-            <Card.Title>Nueva Solicitud</Card.Title>
-          </Card.Header>
-          <Card.Body>
+    <Form onSubmit={handleSubmit}>
+      <fieldset>
+        <Form.Group as={Row}>
+          <Form.Label as="legend" column sm={2}>
+            Nueva Solicitud
+          </Form.Label>
 
-            <Form onSubmit={handleSubmit}>
-              <Form.Group>
-                <EntitiesSelector list={entitiesList} value={selectedEntity} onChange={onSelectedEntityChange} />
+          <EntitiesSelector
+            list={entitiesList}
+            value={selectedEntity}
+            onChange={onSelectedEntityChange}
+          />
+        
+          <Button block color='primary' type='submit'>
+            Submit
+          </Button>
+        </Form.Group>
+      </fieldset>
+    </Form>
+    // <Grid.Row cards alignItems='center'>
+    //   <Grid.Col>
+    //     <Card>
+    //       <Card.Header>
+    //         <Card.Title>Nueva Solicitud</Card.Title>
+    //       </Card.Header>
+    //       <Card.Body>
 
-                <Button block color='primary' type='submit'>
-                  Submit
-                </Button>
-              </Form.Group>
-            </Form>
+    //         <Form onSubmit={handleSubmit}>
+    //           <Form.Group>
+    //             <EntitiesSelector list={entitiesList} value={selectedEntity} onChange={onSelectedEntityChange} />
 
-          </Card.Body>
-        </Card>
-      </Grid.Col>
-    </Grid.Row>
+    //             <Button block color='primary' type='submit'>
+    //               Submit
+    //             </Button>
+    //           </Form.Group>
+    //         </Form>
+
+    //       </Card.Body>
+    //     </Card>
+    //   </Grid.Col>
+    // </Grid.Row>
   )
 }
 
@@ -68,9 +87,9 @@ function EntitiesSelector ({ list, value, onChange }) {
   })(list))
 
   return (
-    <Form.Select label='Tu Entidad' value={value} onChange={onChange}>
+    <Form.Control as="select" label='Tu Entidad' value={value} onChange={onChange}>
       {entities}
-    </Form.Select>
+    </Form.Control>
   )
 }
 

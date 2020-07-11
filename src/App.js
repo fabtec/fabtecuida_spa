@@ -12,6 +12,7 @@ import LoadingPage from './components/LoadingPage'
 import LoginPage from './components/LoginPage'
 import DashboardPage from './components/DashboardPage'
 import NewOrderPage from './components/NewOrderPage'
+import Layout from './components/Layout'
 
 function App () {
   const [isLoggedIn, setIsLoggedIn] = useState(null)
@@ -44,10 +45,14 @@ function App () {
       <Router>
         <Switch>
           <Route path='/orders/new'>
-            <NewOrderPage />
+            <Layout>
+              <NewOrderPage />
+            </Layout>
           </Route>
           <Route path={['/', '/dashboard']}>
-            <DashboardPage />
+            <Layout>
+              <DashboardPage />
+            </Layout>
           </Route>
         </Switch>
       </Router>

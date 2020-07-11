@@ -1,0 +1,61 @@
+[
+  {
+		"request": {
+			"url": "^/api/token/$",
+			"method": "POST",
+			"post": "{\"username\":\"admin\",\"password\":\"admin\"}"
+		},
+		"response": {
+			"status": 200,
+			"headers": {
+				"content-type": "application/json"
+			},
+			"file": "token.json"
+		}
+  },
+  {
+		"request": {
+			"url": "^/api/token/verify/$",
+			"method": "POST",
+			"post": "{\"token\":\"([a-zA-Z0-9]){36}\"}"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "verify.json"
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/orders/$",
+			"method": "POST"
+		},
+		"response": [
+			{
+				"status": 201,
+				"headers": {
+					"content-type": "application/json"
+        }
+			}
+		]
+  },
+  {
+		"request": {
+			"url": "^/api/entities/$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "entities.json"
+			}
+		]
+  }
+]
