@@ -6,6 +6,7 @@
         "updated_at": "2020-07-15T01:55:28.910264Z",
         "title": "Orden nº 1",
         "date": "2020-07-30T00:30:28.910264Z",
+        "status": "En progreso",
         "order": {
             "id": 1,
             "created_at": "12-07-2020 15:53:58",
@@ -13,7 +14,7 @@
             "requester": 1,
             "entity": {
                 "id": 1,
-                "name": "Hospital Curicó",
+                "name": "Hospital de Talca",
                 "location": "-34.9793998,-71.2151059"
             }
         },
@@ -30,6 +31,7 @@
         "updated_at": "2020-07-15T01:55:28.910264Z",
         "title": "Orden nº 2",
         "date": "2020-07-21T00:55:28.910264Z",
+        "status": "Solicitando",
         "order": {
             "id": 1,
             "created_at": "15-07-2020 17:25:32",

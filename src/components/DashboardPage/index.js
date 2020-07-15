@@ -30,6 +30,7 @@ function DashboardPage (events) {
 						"name": ""
 					}
 				},
+				"status": "",
 				"item":{
 					"name": ""
 				},
@@ -76,6 +77,9 @@ function DashboardPage (events) {
 				<b>Lugar:</b> {order.extendedProps.order.entity.name} 
 				<br />
 				<br />
+				<b>Estado:</b> {order.extendedProps.status}
+				<br/>
+				<br/>
 				<b>Fecha de solicitud:</b> {order.extendedProps.order.created_at}
 			</Modal.Body>
 

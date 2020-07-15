@@ -33,13 +33,32 @@ function NewOrderPage () {
        <Card body className="col-12 col-md-6 shadow">
 
         <Form>
+          <Form.Group controlId="manager">
+            <Form.Label>Representante</Form.Label>
+            <Form.Control type="text" placeholder="Escribe un nombre" />
+          </Form.Group>
+
+
           <Form.Group controlId="entity">
-            <Form.Label>Tu Entidad</Form.Label>
+            <Form.Label>Entidad</Form.Label>
             <EntitiesSelector
                   list={entitiesList}
                   value={selectedEntity}
                   onChange={onSelectedEntityChange}
                 />
+          </Form.Group>
+
+          <Form.Group controlId="item">
+            <Form.Label>Insumo</Form.Label>
+            <Form.Control as="select">
+              <option>---</option>
+              <option>Mascarillas</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="quantity">
+            <Form.Label>Cantidad</Form.Label>
+            <Form.Control type="number" placeholder="Ingresa la cantidad de insumos" />
           </Form.Group>
 
           <Button className="shadow" block variant="primary" type="submit">
