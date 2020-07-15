@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Alert } from 'tabler-react'
+import Api from '../../services/api'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import esLocale from '@fullcalendar/core/locales/es';/**/
+import esLocale from '@fullcalendar/core/locales/es'
+
 
 
 
 function DashboardPage (events) {
+
+  const [ordersList, setOrdersList] = useState([])
+
+  useEffect(() => {
+    Api.getOrders()
+      .then((ordersList_) => {
+        setOrdersList(ordersList_)
+      })
+  }, [])
+
   return (
     <>
       <Alert type='success'>
@@ -25,10 +37,7 @@ function DashboardPage (events) {
             "day":      'Día',
             "list":     'Lista'
             }}
-        events={[
-          { title: 'event 1', date: '2020-07-06' },
-          { title: 'event 2', date: '2020-07-20' }
-        ]}
+        events={ordersList}
       />
     </>
   )

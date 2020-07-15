@@ -70,6 +70,17 @@ export default class Api {
       })
   }
 
+  static getOrders () {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/`
+    })
+      .then((res) => {
+        return res.data
+      })
+  }
+
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),

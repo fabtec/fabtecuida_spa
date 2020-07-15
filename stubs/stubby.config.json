@@ -57,5 +57,20 @@
         "file": "entities.json"
 			}
 		]
+  },
+  {
+		"request": {
+			"url": "^/api/orders/$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "orders.json"
+			}
+		]
   }
 ]

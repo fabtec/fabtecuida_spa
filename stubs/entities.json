@@ -1,4 +1,4 @@
 [
-  { "id": 1, "name": "Hospital Curicó" },
-  { "id": 2, "name": "Hospital Talca" }
+  { "id": 1, "name": "Hospital Curicó", "location": "-34.9793998,-71.2151059" },
+  { "id": 2, "name": "Hospital Talca", "location": "-35.4270396,-71.6491471" }
 ]
