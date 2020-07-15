@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import * as RA from 'ramda-adjunct'
 import './App.css'
-import 'tabler-react/dist/Tabler.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Switch,
