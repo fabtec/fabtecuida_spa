@@ -7,6 +7,8 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
+
+import AppContextProvider from "./context/AppContext";
 import Api from './services/api'
 import LoadingPage from './components/LoadingPage'
 import LoginPage from './components/LoginPage'
@@ -61,7 +63,9 @@ function App () {
 
   return (
     <div className='App'>
-      {renderRoot()}
+      <AppContextProvider>
+        {renderRoot()}
+      </AppContextProvider>      
     </div>
   )
 }

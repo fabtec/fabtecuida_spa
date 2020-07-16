@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import * as R from 'ramda'
-import { Row, Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card } from 'react-bootstrap';
 import Api from '../../services/api'
 
 function NewOrderPage () {
