@@ -26,26 +26,35 @@ function NewOrderPage () {
       .then((res) => {
         console.log('res', res)
       })
-  }
+  };
+
+  const entitiesOptions = entitiesList
+    .map((entity) => (
+      <option key={entity.id} value={entity.id}>
+        {entity.name}
+      </option>)
+    );
 
   return (
-    <div class="row justify-content-center">
+    <div className="row justify-content-center">
        <Card body className="col-12 col-md-6 shadow">
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group controlId="manager">
             <Form.Label>Representante</Form.Label>
             <Form.Control type="text" placeholder="Escribe un nombre" />
           </Form.Group>
 
-
           <Form.Group controlId="entity">
             <Form.Label>Entidad</Form.Label>
-            <EntitiesSelector
-                  list={entitiesList}
-                  value={selectedEntity}
-                  onChange={onSelectedEntityChange}
-                />
+            <Form.Control
+              as="select"
+              value={selectedEntity}
+              onChange={onSelectedEntityChange}
+            >
+              <option key={0} value={0}>---</option>
+              { entitiesOptions }
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId="item">
@@ -62,31 +71,11 @@ function NewOrderPage () {
           </Form.Group>
 
           <Button className="shadow" block variant="primary" type="submit">
-          Enviar
+            Enviar
           </Button>
         </Form>
       </Card>
     </div>
-  )
-}
-
-function EntitiesSelector ({ list, value, onChange }) {
-  let entities = [
-    <option key={0} value={0}>---</option>
-  ]
-
-  entities = R.concat(entities, R.map((e) => {
-    return (
-      <option key={e.id} value={e.id}>
-        {e.name}
-      </option>
-    )
-  })(list))
-
-  return (
-    <Form.Control as="select" value={value} onChange={onChange}>
-      {entities}
-    </Form.Control>
   )
 }
 
