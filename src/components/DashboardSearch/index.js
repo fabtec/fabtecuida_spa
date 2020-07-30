@@ -68,7 +68,7 @@ function DashboardSearch({ setSearch }) {
           custom
           onChange={handleSelectStatus}
         >
-          <option value="0">Elegir...</option>
+          <option value="">Elegir...</option>
           <option value="PENDING">pendiente</option>
           <option value="INPROGRESS">en progreso</option>
           <option value="DONE">lista</option>
@@ -82,7 +82,7 @@ function DashboardSearch({ setSearch }) {
         id="entity"
         onChange={handleSelectEntity}
       >
-        <option value="0">Elegir...</option>
+        <option value="">Elegir...</option>
         <option value="1">Hospital de Talca</option>
         <option value="2">Hospital Coquimbo</option>
       </Form.Control>
