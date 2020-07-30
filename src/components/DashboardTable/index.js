@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Badge } from "react-bootstrap";
 
+import { statusBadgesMap } from '../../services/utils';
 import "./DashboardTable.css";
 
 function DashboardTable({ orders = [], setOrder }) {
@@ -13,7 +14,9 @@ function DashboardTable({ orders = [], setOrder }) {
       >
         <td>{index + 1}</td>
         <td>{order.date}</td>
-        <td>{order.status}</td>
+        <td>
+          <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
+        </td>
         <td>{order.entity.name}</td>
       </tr>
     ));

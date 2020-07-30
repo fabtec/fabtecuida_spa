@@ -1,10 +1,9 @@
 import React from 'react'
 
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Badge, Modal, Button } from "react-bootstrap";
+import { statusBadgesMap } from '../../services/utils';
 
 export default function({ show, order, handleClose }) {
-
   return (
     <Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
@@ -16,7 +15,8 @@ export default function({ show, order, handleClose }) {
 				<b>Entidad:</b> {order.entity.name} 
 				<br />
 				<br />
-				<b>Estado:</b> {order.status}
+				<b>Estado:</b>
+				<Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
 				<br/>
 				<br/>
 				<b>Fecha de solicitud:</b> {order.date}
