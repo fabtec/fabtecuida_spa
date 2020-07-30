@@ -1,52 +1,42 @@
 [
     {
         "id": 1,
-        "quantity": 200,
-        "created_at": "2020-07-15T01:55:28.910220Z",
-        "updated_at": "2020-07-15T01:55:28.910264Z",
-        "title": "Orden nº 1",
-        "date": "2020-07-30T00:30:28.910264Z",
-        "status": "En progreso",
-        "order": {
+        "requester": {
             "id": 1,
-            "created_at": "12-07-2020 15:53:58",
-            "updated_at": "2020-07-15T01:53:58.120071Z",
-            "requester": 1,
-            "entity": {
-                "id": 1,
-                "name": "Hospital de Talca",
-                "location": "-34.9793998,-71.2151059"
-            }
+            "last_login": "2020-07-30T02:30:47.525625Z",
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@admin.cl",
+            "date_joined": "2020-07-07T21:56:59.828077Z"
         },
-        "item": {
+        "entity": {
             "id": 1,
-            "name": "Mascarillas",
-            "description": "asd"
-        }
+            "name": "CAPLAB",
+            "location": "123123131"
+        },
+        "status": "INPROGRESS",
+        "date": "2020-07-30T05:38:17.969335Z",
+        "updated_at": "2020-07-30T05:38:17.969374Z"
     },
     {
         "id": 2,
-        "quantity": 100,
-        "created_at": "2020-07-15T01:55:28.910220Z",
-        "updated_at": "2020-07-15T01:55:28.910264Z",
-        "title": "Orden nº 2",
-        "date": "2020-07-21T00:55:28.910264Z",
-        "status": "Solicitando",
-        "order": {
+        "requester": {
             "id": 1,
-            "created_at": "15-07-2020 17:25:32",
-            "updated_at": "2020-07-15T01:53:58.120071Z",
-            "requester": 1,
-            "entity": {
-                "id": 1,
-                "name": "Hospital Curicó",
-                "location": "-34.9793998,-71.2151059"
-            }
+            "last_login": "2020-07-30T02:30:47.525625Z",
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@admin.cl",
+            "date_joined": "2020-07-07T21:56:59.828077Z"
         },
-        "item": {
+        "entity": {
             "id": 1,
-            "name": "Mascarillas",
-            "description": "asd"
-        }
+            "name": "CAPLAB",
+            "location": "123123131"
+        },
+        "status": "INPROGRESS",
+        "date": "2020-08-28T05:38:17.969335Z",
+        "updated_at": "2020-07-30T05:38:17.969374Z"
     }
 ]
