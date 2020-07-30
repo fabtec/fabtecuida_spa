@@ -6,7 +6,6 @@ function DashboardSearch({ setSearch }) {
   const [formValue, setFormValue] = useState({
     entity: '',
     status: '',
-    quantity: '',
     type: '',
   });
 
@@ -26,11 +25,7 @@ function DashboardSearch({ setSearch }) {
       ...formValue,
       status: event.target.value,
     });
-  const handleQuantityGreather = (event) =>
-    setFormValue({
-      ...formValue,
-      quantity: event.target.value,
-    });
+
   const handleCheckBox = ({ target }) => {
     const { value, checked } = target;
 
@@ -53,13 +48,6 @@ function DashboardSearch({ setSearch }) {
   return (
     <Form inline onSubmit={onSearch} className="search-form">
       <InputGroup>
-        <Form.Label htmlFor="quantity">Cantidad mayor o igual a</Form.Label>
-        <Form.Control
-          className="mb-2 mr-sm-2"
-          id="quantity"
-          onChange={handleQuantityGreather}
-        />
-
         <Form.Label htmlFor="status">Estado</Form.Label>
         <Form.Control
           as="select"
