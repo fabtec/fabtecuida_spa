@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
-import {
-  Container,
-  Row,
-  Col
-} from 'react-bootstrap';
+import React, { useContext } from 'react'
 
-export default function Navbar() {
-  
-  const [show, setShow] = useState("d-flex");
-  const SidebarToggle = () => {
-    show == "d-flex toggled" ? setShow("d-flex"): setShow("d-flex toggled");
-  }
+import { AppContext } from '../../context/AppContext';
 
-return (
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-      <button class="btn btn-light" id="menu-toggle" onClick={SidebarToggle}>
-        <span class="navbar-toggler-icon"></span>
+export default function Navbar() {  
+  const { toggleSidebar } = useContext(AppContext);
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <button className="btn btn-light" id="menu-toggle" onClick={toggleSidebar}>
+        <span className="navbar-toggler-icon"></span>
       </button>
     </nav>
   )

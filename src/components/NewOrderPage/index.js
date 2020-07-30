@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import * as R from 'ramda'
-import { Row, Form, Button, Card } from 'react-bootstrap';
+import { Alert, Form, Button, Card, Tabs, Tab } from 'react-bootstrap';
 import Api from '../../services/api'
 
+import './NewOrderPage.css';
+
 function NewOrderPage () {
-  const [entitiesList, setEntitiesList] = useState([])
-  const [selectedEntity, setSelectedEntity] = useState(0)
+  const [entitiesList, setEntitiesList] = useState([]);
+  const [selectedEntity, setSelectedEntity] = useState(0);
+  const [showAlert, setShowAlert] = useState(false);
+  const [tabKey, setTabKey] = useState('order');
 
   useEffect(() => {
     Api.getEntities()
@@ -24,69 +27,82 @@ function NewOrderPage () {
       entity: selectedEntity
     })
       .then((res) => {
+        setShowAlert(true);
         console.log('res', res)
       })
-  }
+  };
 
-  return (
-    <div class="row justify-content-center">
-       <Card body className="col-12 col-md-6 shadow">
+  const entitiesOptions = entitiesList
+    .map((entity) => (
+      <option key={entity.id} value={entity.id}>
+        {entity.name}
+      </option>)
+    );
 
-        <Form>
-          <Form.Group controlId="manager">
-            <Form.Label>Representante</Form.Label>
-            <Form.Control type="text" placeholder="Escribe un nombre" />
-          </Form.Group>
+  const form = (
+    <Card className="col-8 shadow">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="manager">
+          <Form.Label>Representante</Form.Label>
+          <Form.Control type="text" placeholder="Escribe un nombre" />
+        </Form.Group>
 
+        <Form.Group controlId="entity">
+          <Form.Label>Entidad</Form.Label>
+          <Form.Control
+            as="select"
+            value={selectedEntity}
+            onChange={onSelectedEntityChange}
+          >
+            <option key={0} value={0}>---</option>
+            { entitiesOptions }
+          </Form.Control>
+        </Form.Group>
 
-          <Form.Group controlId="entity">
-            <Form.Label>Entidad</Form.Label>
-            <EntitiesSelector
-                  list={entitiesList}
-                  value={selectedEntity}
-                  onChange={onSelectedEntityChange}
-                />
-          </Form.Group>
+        <Form.Group controlId="item">
+          <Form.Label>Insumo</Form.Label>
+          <Form.Control as="select">
+            <option>---</option>
+            <option>Mascarillas</option>
+          </Form.Control>
+        </Form.Group>
 
-          <Form.Group controlId="item">
-            <Form.Label>Insumo</Form.Label>
-            <Form.Control as="select">
-              <option>---</option>
-              <option>Mascarillas</option>
-            </Form.Control>
-          </Form.Group>
+        <Form.Group controlId="quantity">
+          <Form.Label>Cantidad</Form.Label>
+          <Form.Control type="number" placeholder="Ingresa la cantidad de insumos" />
+        </Form.Group>
 
-          <Form.Group controlId="quantity">
-            <Form.Label>Cantidad</Form.Label>
-            <Form.Control type="number" placeholder="Ingresa la cantidad de insumos" />
-          </Form.Group>
-
-          <Button className="shadow" block variant="primary" type="submit">
+        <Button className="shadow" block variant="primary" type="submit">
           Enviar
-          </Button>
-        </Form>
-      </Card>
-    </div>
-  )
-}
-
-function EntitiesSelector ({ list, value, onChange }) {
-  let entities = [
-    <option key={0} value={0}>---</option>
-  ]
-
-  entities = R.concat(entities, R.map((e) => {
-    return (
-      <option key={e.id} value={e.id}>
-        {e.name}
-      </option>
-    )
-  })(list))
+        </Button>
+      </Form>
+    </Card>
+  );
 
   return (
-    <Form.Control as="select" value={value} onChange={onChange}>
-      {entities}
-    </Form.Control>
+    <div>
+      <Alert
+        show={showAlert}
+        variant="success"
+        onClose={() => setShowAlert(false)} dismissible>
+          Solicitud ingresada exitosamente
+      </Alert>
+      <Tabs
+        activeKey={tabKey}
+        onSelect={(keyName) => setTabKey(keyName)}
+      >
+        <Tab eventKey="order" title="Nueva Solicitud">
+          <div className="row justify-content-center">
+            { form }
+          </div>
+        </Tab>
+        <Tab eventKey="offer" title="Nueva Oferta">
+          <div className="row justify-content-center">
+            { form }
+          </div>
+        </Tab>
+      </Tabs>
+    </div>
   )
 }
 

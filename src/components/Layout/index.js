@@ -1,28 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react';
 import {
   Container,
-  Row,
-  Col
 } from 'react-bootstrap';
 
+import { AppContext } from '../../context/AppContext';
 import Sidebar from '../Sidebar';
+import Navbar from '../Navbar';
 
 export default function Layout({ children }) {
-  
-  const [show, setShow] = useState("d-flex");
-  const SidebarToggle = () => {
-    show == "d-flex toggled" ? setShow("d-flex"): setShow("d-flex toggled");
-  }
-
+  const { isSidebarOpen } = useContext(AppContext);
+  const showSidebarClassname = isSidebarOpen
+    ? 'd-flex'
+    : 'd-flex toggled';
   return (
-    <div className={show} id="wrapper">
+    <div className={showSidebarClassname} id="wrapper">
       <Sidebar />
       <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <button class="btn btn-light" id="menu-toggle" onClick={SidebarToggle}>
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </nav>
+        <Navbar />
         <Container className="mt-4 mb-4">
           { children }
         </Container>
