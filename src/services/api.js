@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import dayjs from 'dayjs';
 
 const API_HOST = process.env.REACT_APP_API_HOST || 'http://localhost:8000'
 
@@ -70,15 +71,19 @@ export default class Api {
       })
   }
 
-  static getOrders () {
+  static getOrders (params = null) {
     return axios({
       headers: Api.getAuthHeaders(),
       method: 'get',
-      url: `${API_HOST}/api/orders/`
+      url: `${API_HOST}/api/orders/`,
+      params: params || {}
     })
-      .then((res) => {
-        return res.data
-      })
+      .then((res) => res.data
+        .map(order => ({
+          ...order,
+          title: `${order.entity.name}`
+        }))
+      )
   }
 
   static createOrder (data) {

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Badge, Modal, Button } from "react-bootstrap";
+import { statusBadgesMap } from '../../services/utils';
 
 export default function({ show, order, handleClose }) {
   return (
@@ -10,16 +10,16 @@ export default function({ show, order, handleClose }) {
 				<Modal.Title>{order.title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				Entrega de {order.extendedProps.quantity} {order.extendedProps.item.name}
 				<br />
 				<br />
-				<b>Lugar:</b> {order.extendedProps.order.entity.name} 
+				<b>Entidad:</b> {order.entity.name} 
 				<br />
 				<br />
-				<b>Estado:</b> {order.extendedProps.status}
+				<b>Estado:</b>
+				<Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
 				<br/>
 				<br/>
-				<b>Fecha de solicitud:</b> {order.extendedProps.order.created_at}
+				<b>Fecha de solicitud:</b> {order.date}
 			</Modal.Body>
 
 			<Modal.Footer>

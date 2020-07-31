@@ -1,76 +1,56 @@
-import React, { useState, useEffect } from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import '@fullcalendar/core/locales/es';
+import React, { useState, useEffect } from "react";
+import { Tabs, Tab } from "react-bootstrap";
+import DashboardCalendar from "../DashboardCalendar";
+import DashboardTable from "../DashboardTable";
+import DashboardSearch from "../DashboardSearch";
+import Api from "../../services/api";
+import Modal from "../Modal";
 
-import Api from '../../services/api'
-import Modal from '../Modal';
+function DashboardPage() {
+  const [orders, setOrders] = useState([]);
+  const [tabKey, setTabKey] = useState("calendar");
+  const [orderSearch, setOrderSearch] = useState({});
+  const [showOrder, setShowOrder] = useState(false);
+  const handleCloseOrder = () => setShowOrder(false);
+  const handleShowOrder = () => setShowOrder(true);
 
-function DashboardPage () {
-	const [ordersList, setOrdersList] = useState([])
-	const [showOrder, setShowOrder] = useState(false);
-	const handleCloseOrder = () => setShowOrder(false);
-	const handleShowOrder = () => setShowOrder(true);
+  const [order, setOrder] = useState(null);
 
-	const handleSelectOrder = (arg) => {
-		setOrder({
-			"title": arg.event._def.title,
-			"extendedProps": arg.event._def.extendedProps
-		});
-		handleShowOrder();
-	}
+  const getOrders = (params) =>
+    Api.getOrders(params).then((ordersList) => {
+      setOrders(ordersList);
+    });
 
-	const [order, setOrder] = useState(
-		{
-			"title": "",
-			"extendedProps":{
-				"quantity": 0,
-				"order": { 
-					"entity": {
-						"name": ""
-					}
-				},
-				"status": "",
-				"item":{
-					"name": ""
-				},
-				"created_at": ""
-			}
-		}
-	)
+  useEffect(() => {
+    getOrders(orderSearch);
+  }, [orderSearch]);
 
+  useEffect(() => {
+    if (order) {
+      handleShowOrder();
+    }
+  }, [order]);
 
-	useEffect(() => {
-		Api.getOrders()
-			.then((ordersList_) => {
-				setOrdersList(ordersList_)
-			})
-	}, [])
-
-	return (
-		<>			
-			<FullCalendar
-				plugins={[ dayGridPlugin ]}
-				initialView="dayGridMonth"
-				locale="esLocale"
-				firstDay="1"
-				events={ordersList}
-				eventClick={handleSelectOrder}
-				buttonText={{
-					"today":    'Hoy',
-					"month":    'Mes',
-					"week":     'Semana',
-					"day":      'Día',
-					"list":     'Lista'
-				}}
-			/>
-			<Modal
-				order={order}
-				show={showOrder}
-				handleClose={handleCloseOrder}
-			/>
-		</>
-	)
+  return (
+    <div>
+      <DashboardSearch setSearch={setOrderSearch} />
+      <Tabs activeKey={tabKey} onSelect={(keyName) => setTabKey(keyName)}>
+        <Tab eventKey="calendar" title="Calendario">
+          <div className="row">
+            <DashboardCalendar orders={orders} setOrder={setOrder} />
+          </div>
+        </Tab>
+        <Tab eventKey="table" title="Tabla">
+          <div className="row justify-content-center">
+            <DashboardTable orders={orders} setOrder={setOrder} />
+          </div>
+        </Tab>
+      </Tabs>
+      {order ? (
+        <Modal order={order} show={showOrder} handleClose={handleCloseOrder} />
+      ) : null}
+    </div>
+  );
 }
 
-export default DashboardPage
+export default DashboardPage;
