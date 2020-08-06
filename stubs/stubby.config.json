@@ -72,5 +72,35 @@
         "file": "orders.json"
 			}
 		]
+	},
+	{
+		"request": {
+			"url": "^/api/orders/supplied$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "orders-supplied.json"
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/orders/requested$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "orders-requested.json"
+			}
+		]
   }
 ]

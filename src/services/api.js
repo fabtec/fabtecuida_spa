@@ -86,6 +86,26 @@ export default class Api {
       )
   }
 
+  static getRequestedOrders (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/requested`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static getSuppliedOrders (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/supplied`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),
