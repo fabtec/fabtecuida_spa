@@ -9,6 +9,7 @@ export default function Sidebar() {
       <div className="list-group list-group-flush">
         <a href="/dashboard" className="list-group-item list-group-item-action bg-light">Inicio</a>
         <a href="/orders/new" className="list-group-item list-group-item-action bg-light">Crear Ordenes</a>
+        <a href="/orders/match" className="list-group-item list-group-item-action bg-light">Asignar Ordenes</a>
       </div>
     </div>
   );
