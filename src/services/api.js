@@ -116,8 +116,6 @@ export default class Api {
     .then((res) => res.data);
   }
 
-  
-
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),
@@ -139,6 +137,8 @@ export default class Api {
         'itemSelected': itemSelected, 
         'requested_item': item_requested
       }
+    }).then((res) => {
+      return res.data
     })
   }
 }
