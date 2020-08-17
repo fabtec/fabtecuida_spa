@@ -106,6 +106,18 @@ export default class Api {
     .then((res) => res.data);
   }
 
+  static getSuppliedInventory (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/supplier-inventory`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  
+
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),

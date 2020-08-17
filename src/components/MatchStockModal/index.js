@@ -4,14 +4,13 @@ import { Card, Modal, Button, ListGroup, ListGroupItem, Accordion, Form, Alert }
 import Api from "../../services/api";
 
 export default function ({ show, item, handleClose }) {
-	const [orders, setOrders] = useState([]);
+	const [inventory, setInventory] = useState([]);
   const [isErrorPresent, setIsErrorPresent] = useState(false);
-  const [itemSelected, setItemSelected] = useState("");
-  const handleChangeUsername = (event) => setItemSelected(event.target.value);
-  
+  const [itemSelected, setItemSelected] = useState([]);
   
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(itemSelected)
     /* setIsPerformingLogin(true);
 
     Api.loginUser({ username, password })
@@ -39,31 +38,41 @@ export default function ({ show, item, handleClose }) {
     );
   };
 
-  const getOrders = () =>
-    Api.getSuppliedOrders().then((ordersList) => {
-      setOrders(ordersList);
+  const getSuppliedInventory = () =>
+    Api.getSuppliedInventory().then((inventory) => {
+      setInventory(inventory);
     });
     
-	const handleAssign = (item, order) => {
-		setItemSelected({
-			...item,
-			entity: order.entity,
-		});
-	};
+  
+  const handleChangeClick = (e) =>{
+    let index
+    const options = itemSelected
 
-  const getItemRow = (order) =>
-    order.order_supplied_item.map((item) => (
+    if (e.target.checked) {
+      // add the numerical value of the checkbox to options array
+      options.push(+e.target.value)
+    } else {
+      // or remove the value from the unchecked checkbox from the array
+      index = options.indexOf(+e.target.value)
+      options.splice(index, 1)
+    }
+    setItemSelected(options)
+  }
+
+  const getItemRow = (inventory) => (
       <ListGroupItem>
           <Form.Check 
               type='checkbox'
-              label={`${item.quantity} ${item.item.name}`}
-              id={`inline-${item.id}`}
+              label={`${inventory.quantity} ${inventory.item.name}`}
+              id={`inline-${inventory.id}`}
+              value={inventory.id}
+              onChange={handleChangeClick.bind(this)}
             />
       </ListGroupItem>
-    ));
+    );
 
   useEffect(() => {
-    getOrders();
+    getSuppliedInventory();
   }, []);
 
   return (
@@ -75,18 +84,18 @@ export default function ({ show, item, handleClose }) {
         <Modal.Body>
           <h5 className="mb-4">Articulos ofrecidos</h5>
           
-          {orders.map((order) => (
+          {inventory.map((inventory) => (
             <Accordion defaultActiveKey="0">
             <Card className="p-0 mb-4 shadow">
               <Card.Header>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                {order.entity.name}
+                {inventory.supplier.name}
                 </Accordion.Toggle>
               </Card.Header>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                 <ListGroup className="list-group-flush">
-                  { getItemRow(order)}
+                  { getItemRow(inventory)}
                 </ListGroup>
                 </Card.Body>
               </Accordion.Collapse>
@@ -101,7 +110,7 @@ export default function ({ show, item, handleClose }) {
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button type="submit" variant="success" onClick={handleClose}>
             Asignar
           </Button>
         </Modal.Footer>

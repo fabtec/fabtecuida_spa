@@ -15,14 +15,16 @@ function MatchStockPage() {
   const handleShowModal = () => setShowItem(true);
 
   const getOrders = () =>
-    Api.getRequestedOrders()
-      .then((ordersList) => {
-        setOrders(ordersList);
-      });
+  Api.getRequestedOrders()
+  .then((ordersList) => {
+    setOrders(ordersList);
+  });
+
   const handleAssign = (item) => {
     setItemSelected(item);
     handleShowModal();
   }
+  
   const getItemRow = (order) => order.order_requested_item
     .map((item) => (
       <ListGroupItem>
