@@ -105,7 +105,7 @@
 	},
 	{
 		"request": {
-			"url": "^/api/orders/supplier-inventory$",
+			"url": "^/api/supplier-inventory$",
 			"method": "GET"
 		},
 		"response": [

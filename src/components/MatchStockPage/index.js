@@ -15,7 +15,7 @@ function MatchStockPage() {
   const handleShowModal = () => setShowItem(true);
 
   const getOrders = () =>
-  Api.getRequestedOrders()
+  Api.getOrders()
   .then((ordersList) => {
     setOrders(ordersList);
   });

@@ -7,13 +7,12 @@ export default function ({ show, item, handleClose }) {
 	const [inventory, setInventory] = useState([]);
   const [isErrorPresent, setIsErrorPresent] = useState(false);
   const [itemSelected, setItemSelected] = useState([]);
-  
+  const [item_requested, setItem_requested] = useState();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(itemSelected)
-    /* setIsPerformingLogin(true);
-
-    Api.loginUser({ username, password })
+    
+    Api.setOrdersSupplied({ itemSelected, item_requested })
       .then((res) => {
         setIsErrorPresent(false);
         const { access, refresh } = res.data;
@@ -24,8 +23,8 @@ export default function ({ show, item, handleClose }) {
         setIsErrorPresent(true);
       })
       .finally(() => {
-        setIsPerformingLogin(false);
-      }); */
+        console.log("Guardado!")
+      });
   };
 
   const renderAlert = (isError) => {
@@ -39,7 +38,7 @@ export default function ({ show, item, handleClose }) {
   };
 
   const getSuppliedInventory = () =>
-    Api.getSuppliedInventory().then((inventory) => {
+    Api.getSuppliedInventory({item:item.item.id}).then((inventory) => {
       setInventory(inventory);
     });
     
@@ -57,6 +56,7 @@ export default function ({ show, item, handleClose }) {
       options.splice(index, 1)
     }
     setItemSelected(options)
+    setItem_requested(item.id)
   }
 
   const getItemRow = (inventory) => (

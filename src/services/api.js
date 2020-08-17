@@ -110,7 +110,7 @@ export default class Api {
     return axios({
       headers: Api.getAuthHeaders(),
       method: 'get',
-      url: `${API_HOST}/api/orders/supplier-inventory`,
+      url: `${API_HOST}/api/supplier-inventory/`,
       params: params || {}
     })
     .then((res) => res.data);
@@ -128,5 +128,17 @@ export default class Api {
       .then((res) => {
         return res.data
       })
+  }
+
+  static setOrdersSupplied ({ itemSelected, item_requested }) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/supplied-item/`,
+      data: {
+        'itemSelected': itemSelected, 
+        'requested_item': item_requested
+      }
+    })
   }
 }
