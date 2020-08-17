@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab, ListGroup, Button } from "react-bootstrap";
+import { Tabs, Tab, ListGroup,ListGroupItem, Button, Card } from "react-bootstrap";
 
 import Api from "../../services/api";
 import MatchStockModal from "../MatchStockModal";
@@ -25,7 +25,8 @@ function MatchStockPage() {
   }
   const getItemRow = (order) => order.order_requested_item
     .map((item) => (
-      <div className="row order-item">
+      <ListGroupItem>
+       <div className="row order-item">
         <div className="col-sm-4">
           {`${item.quantity} ${item.item.name}`}
         </div>
@@ -33,6 +34,8 @@ function MatchStockPage() {
           <Button onClick={() => handleAssign(item)}>Asignar</Button>
         </div>
       </div>
+      </ListGroupItem>
+      
     ));
 
   useEffect(() => {
@@ -45,16 +48,16 @@ function MatchStockPage() {
       <Tabs activeKey={tabKey} onSelect={(keyName) => setTabKey(keyName)}>
         <Tab eventKey="pending" title="Pendientes">
           <div className="row">
-            <h3>Items Solicitados</h3>
-            <ListGroup className="col-sm-12">
-              {orders
-                .map((order) =>
-                  <ListGroup.Item>{order.entity.name}
-                    { getItemRow(order)}
-                  </ListGroup.Item>
-                )
-              }
-            </ListGroup>
+          {orders
+              .map((order) =>
+              <Card className="col-12 p-0 mb-4 shadow">
+                <Card.Header as="h5">{order.entity.name}</Card.Header>
+                <ListGroup className="list-group-flush">
+                  { getItemRow(order)}
+                </ListGroup>
+              </Card>
+            )
+          }
           </div>
           {itemSelected ? (
             <MatchStockModal item={itemSelected} show={showItem} handleClose={handleCloseModal} />

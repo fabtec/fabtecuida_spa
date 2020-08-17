@@ -1,16 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Card, Modal, Button, ListGroup, Accordion } from "react-bootstrap";
+import { Card, Modal, Button, ListGroup, ListGroupItem, Accordion, Form, Alert } from "react-bootstrap";
 
 import Api from "../../services/api";
 
 export default function ({ show, item, handleClose }) {
 	const [orders, setOrders] = useState([]);
-	const [itemSelected, setItemSelected] = useState(null);
+  const [isErrorPresent, setIsErrorPresent] = useState(false);
+  const [itemSelected, setItemSelected] = useState("");
+  const handleChangeUsername = (event) => setItemSelected(event.target.value);
+  
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    /* setIsPerformingLogin(true);
+
+    Api.loginUser({ username, password })
+      .then((res) => {
+        setIsErrorPresent(false);
+        const { access, refresh } = res.data;
+        Api.setTokens({ access, refresh });
+        window.location.href = window.location.pathname;
+      })
+      .catch(() => {
+        setIsErrorPresent(true);
+      })
+      .finally(() => {
+        setIsPerformingLogin(false);
+      }); */
+  };
+
+  const renderAlert = (isError) => {
+    if (!isError) return null;
+
+    return (
+      <Alert variant="danger" show={isErrorPresent}>
+        Error, algo pasó :(
+      </Alert>
+    );
+  };
 
   const getOrders = () =>
     Api.getSuppliedOrders().then((ordersList) => {
       setOrders(ordersList);
-		});
+    });
+    
 	const handleAssign = (item, order) => {
 		setItemSelected({
 			...item,
@@ -20,14 +53,13 @@ export default function ({ show, item, handleClose }) {
 
   const getItemRow = (order) =>
     order.order_supplied_item.map((item) => (
-      <div className="row order-item">
-        <div className="col-sm-4">{`${item.quantity} ${item.item.name}`}</div>
-        <div className="col-sm-4">
-					<Button onClick={() => handleAssign(item, order)}>
-						Seleccionar
-          </Button>
-        </div>
-      </div>
+      <ListGroupItem>
+          <Form.Check 
+              type='checkbox'
+              label={`${item.quantity} ${item.item.name}`}
+              id={`inline-${item.id}`}
+            />
+      </ListGroupItem>
     ));
 
   useEffect(() => {
@@ -35,45 +67,45 @@ export default function ({ show, item, handleClose }) {
   }, []);
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Asignar Item</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Card>
-          <b>Item:</b> {`${item.quantity} ${item.item.name}`}
-        </Card>
-				<Card>
-          <b>Item Asignado:</b> 
-					{ itemSelected && `${itemSelected.quantity} ${itemSelected.item.name} de ${itemSelected.entity.name}`}
-        </Card>
-        <Accordion defaultActiveKey="list-open">
-          <h3>Seleccione </h3>
-          <Accordion.Toggle as={Button} variant="link" eventKey="list-open">
-            colapsar
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="list-open">
-            <h3>Items ofrecidos</h3>
-						<ListGroup className="col-sm-12">
-              {orders.map((order) => (
-                <ListGroup.Item>
-                  {order.entity.name}
-                  {getItemRow(order)}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Accordion.Collapse>
-        </Accordion>
-      </Modal.Body>
+    <Modal size="lg" show={show} onHide={handleClose}>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Solicitud - {`${item.quantity} ${item.item.name}`}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5 className="mb-4">Articulos ofrecidos</h5>
+          
+          {orders.map((order) => (
+            <Accordion defaultActiveKey="0">
+            <Card className="p-0 mb-4 shadow">
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                {order.entity.name}
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                <ListGroup className="list-group-flush">
+                  { getItemRow(order)}
+                </ListGroup>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          ))}        
+          
+        </Modal.Body>
 
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cerrar
-        </Button>
-				<Button variant="success" onClick={handleClose}>
-          Asignar
-        </Button>
-      </Modal.Footer>
+        <Modal.Footer>
+          {renderAlert(isErrorPresent)}
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="success" onClick={handleClose}>
+            Asignar
+          </Button>
+        </Modal.Footer>
+        </Form>
     </Modal>
   );
 }

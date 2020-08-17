@@ -12,6 +12,7 @@ function DashboardTable({ orders = [], setOrder }) {
         key={order.id}
         onClick={() => setOrder(order)}
       >
+        <td class="text-center"><button class="btn btn-success">Ver más detalles</button></td>
         <td>{index + 1}</td>
         <td>{order.entity.name}</td>
         <td>
@@ -28,6 +29,7 @@ function DashboardTable({ orders = [], setOrder }) {
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th></th>
             <th>Número orden</th>
             <th>Entidad</th>
             <th>Estado</th>
