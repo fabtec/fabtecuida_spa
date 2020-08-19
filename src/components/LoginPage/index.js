@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Api from "../../services/api";
+import "./LoginPage.css";
 import {
-  Container,
-  Col,
-  Row,
   Card,
   Form,
   Button,
+  Image,
   Alert,
 } from "react-bootstrap";
 
@@ -49,51 +48,41 @@ function LoginPage() {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col>
-        <h1>Hola!</h1>
-          <Card>
-            <Card.Header>
-              <Card.Title>FABTECuida</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group as={Row}>
-                  <Form.Control
-                    type="text"
-                    icon="user"
-                    placeholder="Username"
-                    value={username}
-                    onChange={handleChangeUsername}
-                  />
-                  <Form.Control
-                    type="password"
-                    icon="lock"
-                    placeholder="Password"
-                    value={password}
-                    onChange={handleChangePassword}
-                  />
-                  {renderAlert(isErrorPresent)}
-                  
-                  {/*
-                    TODO: loading when button is pressed. tabler react has loading in buttons  
-                    using the prop --> loading={isPerformingLogin}
-                  */}
-                  <Button
-                    block
-                    color="primary"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                </Form.Group>
-              </Form> 
-            </Card.Body>
-          </Card> 
-        </Col>
-      </Row>
-    </Container>
+    <div className="body-login center">
+      <Card className="shadow card-login">
+        <Card.Body className="p-0">
+          <Form className="form-signin" onSubmit={handleSubmit}>
+            <Image src="logo.svg" alt="" width="72" height="72" />
+            <h1 className="h3 mb-3 font-weight-normal text-center">FABTECuida</h1>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label className="pb-0 pl-0">Nombre de usuario</Form.Label>
+              <Form.Control 
+                type="text" 
+                icon="user"
+                placeholder="Username"
+                value={username}
+                onChange={handleChangeUsername} autofocus />
+            </Form.Group>
+            
+            
+            <Form.Group controlId="formBasicPassword" className="mb-4">
+              <Form.Label className="pb-0 pl-0">Contraseña</Form.Label>
+              <Form.Control 
+                type="password"
+                icon="lock"
+                placeholder="Contraseña"
+                value={password}
+                onChange={handleChangePassword} 
+              />
+            </Form.Group>
+
+            {renderAlert(isErrorPresent)}
+
+            <Button block className="shadow" color="primary" type="submit"> Entrar </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+      </div>
   );
 }
 
