@@ -37,8 +37,8 @@ function MatchStockPage() {
   }
   
   const getItemRow = (order) => order.order_requested_item
-    .map((item) => (
-      <ListGroupItem>
+    .map((item, index) => (
+      <ListGroupItem key={index}>
        <div className="row order-item">
         <div className="col-sm-4">
           {`${item.quantity} ${item.item.name}`}
@@ -82,12 +82,14 @@ function MatchStockPage() {
                 <ListGroup className="list-group-flush">
                   { getItemRow(order)}
                 </ListGroup>
-              </Card>
-            )
-          }
+              </Card>)
+            }
           </div>
           {itemSelected ? (
-            <MatchStockModal item={itemSelected} show={showItem} handleClose={handleCloseModal} />
+            <MatchStockModal
+              item={itemSelected}
+              show={showItem}
+              handleClose={handleCloseModal} />
           ) : null}
         </Tab>
         <Tab eventKey="inprogress" title="En Progreso">
