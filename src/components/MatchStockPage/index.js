@@ -7,22 +7,33 @@ import MatchStockModal from "../MatchStockModal";
 import './MatchStockPage.css';
 
 function MatchStockPage() {
-  const [orders, setOrders] = useState([]);
+  const [ordersPending, setOrdersPending] = useState([]);
+  const [ordersInProgress, setOrdersInProgress] = useState([]);
   const [tabKey, setTabKey] = useState("pending");
   const [itemSelected, setItemSelected] = useState(null);
   const [showItem, setShowItem] = useState(false);
   const handleCloseModal = () => setShowItem(false);
   const handleShowModal = () => setShowItem(true);
 
-  const getOrders = () =>
-  Api.getOrders()
+  const getOrdersPending = () =>
+  Api.getOrders({status:"PENDING"})
   .then((ordersList) => {
-    setOrders(ordersList);
+    setOrdersPending(ordersList);
+  });
+
+  const getOrdersInProgress = () =>
+  Api.getOrders({status:"INPROGRESS"})
+  .then((ordersList) => {
+    setOrdersInProgress(ordersList);
   });
 
   const handleAssign = (item) => {
     setItemSelected(item);
     handleShowModal();
+  }
+
+  const handleComplete = (item) => {
+    //UPDATEAR ITEM SUPPLIED STATUS A DONE
   }
   
   const getItemRow = (order) => order.order_requested_item
@@ -37,11 +48,25 @@ function MatchStockPage() {
         </div>
       </div>
       </ListGroupItem>
-      
+    ));
+  
+    const getItemRowProgress = (order) => order.order_supplied_item
+    .map((item) => (
+      <ListGroupItem>
+       <div className="row order-item">
+        <div className="col-sm-4">
+          {`${item.quantity} ${item.item.name}`}
+        </div>
+        <div className="col-sm-4">
+          <Button onClick={() => handleComplete(item)}>Completar</Button>
+        </div>
+      </div>
+      </ListGroupItem>
     ));
 
   useEffect(() => {
-    getOrders();
+    getOrdersPending();
+    getOrdersInProgress();
   }, []);
 
 
@@ -50,7 +75,7 @@ function MatchStockPage() {
       <Tabs activeKey={tabKey} onSelect={(keyName) => setTabKey(keyName)}>
         <Tab eventKey="pending" title="Pendientes">
           <div className="row">
-          {orders
+          {ordersPending
               .map((order) =>
               <Card className="col-12 p-0 mb-4 shadow">
                 <Card.Header as="h5">{order.entity.name}</Card.Header>
@@ -65,9 +90,24 @@ function MatchStockPage() {
             <MatchStockModal item={itemSelected} show={showItem} handleClose={handleCloseModal} />
           ) : null}
         </Tab>
+        <Tab eventKey="inprogress" title="En Progreso">
+          <div className="row justify-content-center">
+              {ordersInProgress
+                .map((order) =>
+                <Card className="col-12 p-0 mb-4 shadow">
+                <Card.Header as="h5">{order.entity.name}</Card.Header>
+                <ListGroup className="list-group-flush">
+                  { getItemRowProgress(order)}
+                </ListGroup>
+              </Card>
+                )
+              }
+          </div>
+        </Tab>
+        
         <Tab eventKey="completed" title="Completadas">
           <div className="row justify-content-center">
-              {orders
+              {ordersPending
                 .map((order) =>
                   <ListGroup.Item>{order.entity.name}
                     <ListGroup.Item>100 mascarillas</ListGroup.Item>
