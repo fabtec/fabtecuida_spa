@@ -68,11 +68,11 @@ function MatchStockPage() {
     .map((item) => (
       <ListGroupItem>
        <div className="row order-item">
-        <div className="col-sm-4">
-          {`${item.quantity} ${item.item.name}`}
+        <div className="col-sm-6">
+          {`${item.quantity} ${item.item.name} en camino desde`} <b>{item.supplier.name}</b>
         </div>
-        <div className="col-sm-4">
-          <Button onClick={() => handleComplete(item)}>Completar</Button>
+        <div className="col-sm-6">
+          <Button onClick={() => handleComplete(item)} disabled={item.status == "DONE"}>Completar</Button>
         </div>
       </div>
       </ListGroupItem>
@@ -82,8 +82,8 @@ function MatchStockPage() {
     .map((item) => (
       <ListGroupItem>
        <div className="row order-item">
-        <div className="col-sm-4">
-          {`${item.quantity} ${item.item.name}`}
+        <div className="col-sm-12">
+        {`${item.quantity} ${item.item.name} suministrado por`} <b>{item.supplier.name}</b>
         </div>
       </div>
       </ListGroupItem>
