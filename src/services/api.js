@@ -141,4 +141,15 @@ export default class Api {
       return res.data
     })
   }
+
+  static PutOrdersSupplied (order_supplied_id, param) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'patch',
+      url: `${API_HOST}/api/orders-supplied/${order_supplied_id}/`,
+      data: param
+    }).then((res) => {
+      return res.data
+    })
+  }
 }

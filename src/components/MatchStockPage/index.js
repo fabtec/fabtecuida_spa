@@ -9,6 +9,7 @@ import './MatchStockPage.css';
 function MatchStockPage() {
   const [ordersPending, setOrdersPending] = useState([]);
   const [ordersInProgress, setOrdersInProgress] = useState([]);
+  const [ordersDone, setOrdersDone] = useState([]);
   const [tabKey, setTabKey] = useState("pending");
   const [itemSelected, setItemSelected] = useState(null);
   const [showItem, setShowItem] = useState(false);
@@ -27,13 +28,26 @@ function MatchStockPage() {
     setOrdersInProgress(ordersList);
   });
 
+  const getOrdersDone = () =>
+  Api.getOrders({status:"DONE"})
+  .then((ordersList) => {
+    setOrdersDone(ordersList);
+  });
+
   const handleAssign = (item) => {
     setItemSelected(item);
     handleShowModal();
   }
 
-  const handleComplete = (item) => {
+  const handleComplete = (item_) => {
     //UPDATEAR ITEM SUPPLIED STATUS A DONE
+    
+    let order_supplied_id = item_.id;
+    let params = {"status": "DONE"}
+    Api.PutOrdersSupplied(order_supplied_id, params).then((res)=>{
+      console.log(res);
+      console.log("ACTUALIZADO");
+    })
   }
   
   const getItemRow = (order) => order.order_requested_item
@@ -64,9 +78,23 @@ function MatchStockPage() {
       </ListGroupItem>
     ));
 
+    const getItemRowDone = (order) => order.order_supplied_item
+    .map((item) => (
+      <ListGroupItem>
+       <div className="row order-item">
+        <div className="col-sm-4">
+          {`${item.quantity} ${item.item.name}`}
+        </div>
+      </div>
+      </ListGroupItem>
+    ));
+
+    
+
   useEffect(() => {
     getOrdersPending();
     getOrdersInProgress();
+    getOrdersDone();
   }, []);
 
 
@@ -109,12 +137,14 @@ function MatchStockPage() {
         
         <Tab eventKey="completed" title="Completadas">
           <div className="row justify-content-center">
-              {ordersPending
+              {ordersDone
                 .map((order) =>
-                  <ListGroup.Item>{order.entity.name}
-                    <ListGroup.Item>100 mascarillas</ListGroup.Item>
-                    <ListGroup.Item>200 mascarillas</ListGroup.Item>
-                  </ListGroup.Item>
+                <Card className="col-12 p-0 mb-4 shadow">
+                <Card.Header as="h5">{order.entity.name}</Card.Header>
+                <ListGroup className="list-group-flush">
+                  { getItemRowDone(order)}
+                </ListGroup>
+              </Card>
                 )
               }
           </div>
