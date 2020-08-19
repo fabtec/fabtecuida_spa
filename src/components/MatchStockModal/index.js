@@ -41,8 +41,7 @@ export default function ({ show, item, handleClose }) {
     Api.getSuppliedInventory({item:item.item.id}).then((inventory) => {
       setInventory(inventory);
     });
-    
-  
+
   const handleChangeClick = (e) =>{
     let index
     const options = itemSelected
@@ -60,7 +59,7 @@ export default function ({ show, item, handleClose }) {
   }
 
   const getItemRow = (inventory) => (
-      <ListGroupItem>
+      <ListGroupItem key={inventory.id}>
           <Form.Check 
               type='checkbox'
               label={`${inventory.quantity} ${inventory.item.name}`}
@@ -73,7 +72,7 @@ export default function ({ show, item, handleClose }) {
 
   useEffect(() => {
     getSuppliedInventory();
-  }, []);
+  }, [item]);
 
   return (
     <Modal size="lg" show={show} onHide={handleClose}>
@@ -85,8 +84,8 @@ export default function ({ show, item, handleClose }) {
           <h5 className="mb-4">Articulos ofrecidos</h5>
           
           {inventory.map((inventory) => (
-            <Accordion defaultActiveKey="0">
-            <Card className="p-0 mb-4 shadow">
+            <Accordion defaultActiveKey="0" key={inventory.id}>
+              <Card className="p-0 mb-4 shadow">
               <Card.Header>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
                 {inventory.supplier.name}
@@ -100,7 +99,7 @@ export default function ({ show, item, handleClose }) {
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
-          </Accordion>
+            </Accordion>
           ))}        
           
         </Modal.Body>

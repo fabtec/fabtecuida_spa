@@ -105,8 +105,11 @@
 	},
 	{
 		"request": {
-			"url": "^/api/supplier-inventory$",
-			"method": "GET"
+			"url": "^/api/supplier-inventory",
+			"method": "GET",
+			"query":{
+				"item": "(\\d+)"
+			}
 		},
 		"response": [
 			{
