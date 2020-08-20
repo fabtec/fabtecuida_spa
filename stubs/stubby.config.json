@@ -26,6 +26,28 @@
 					"content-type": "application/json"
         },
         "file": "verify.json"
+			},
+			{
+				"status": 401,
+				"headers": {
+					"content-type": "application/json"
+        }
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/token/refresh/$",
+			"method": "POST",
+			"post": "{\"refresh\":\"([a-zA-Z0-9]){36}\"}"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "token.json"
 			}
 		]
 	},
@@ -72,5 +94,54 @@
         "file": "orders.json"
 			}
 		]
-  }
+	},
+	{
+		"request": {
+			"url": "^/api/orders/supplied$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "orders-supplied.json"
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/orders/requested$",
+			"method": "GET"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "orders-requested.json"
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/supplier-inventory",
+			"method": "GET",
+			"query":{
+				"item": "(\\d+)"
+			}
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+				},
+				"file": "supplier-inventory.json"
+			}
+		]
+	}
+
 ]

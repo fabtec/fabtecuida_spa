@@ -12,10 +12,10 @@
         },
         "entity": {
             "id": 1,
-            "name": "Hospital de Talca",
+            "name": "Inacap",
             "location": "123123131"
         },
-        "order_requested_item": [
+        "order_supplied_item": [
             {
                 "item": {
                     "id": 1,
@@ -29,7 +29,7 @@
             },
             {
                 "item": {
-                    "id": 2,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -40,7 +40,7 @@
             },
             {
                 "item": {
-                    "id": 3,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -51,7 +51,7 @@
             },
             {
                 "item": {
-                    "id": 4,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -61,8 +61,8 @@
                 "updated_at": "2020-07-30T07:03:55.733492Z"
             }
         ],
-        "order_supplied_item": [],
-        "date": "2020-07-30T05:38:17.969335Z",
+        "order_requested_item": [],
+        "created_at": "2020-07-30T05:38:17.969335Z",
         "updated_at": "2020-07-30T05:38:17.969374Z"
     },
     {
@@ -78,10 +78,10 @@
         },
         "entity": {
             "id": 1,
-            "name": "Hospital de Coquimbo",
+            "name": "Utal",
             "location": "123123131"
         },
-        "order_requested_item": [
+        "order_supplied_item": [
             {
                 "item": {
                     "id": 1,
@@ -105,8 +105,8 @@
                 "updated_at": "2020-07-30T06:35:27.163216Z"
             }
         ],
-        "order_supplied_item": [],
-        "date": "2020-07-30T05:57:19.787205Z",
+        "order_requested_item": [],
+        "created_at": "2020-07-30T05:57:19.787205Z",
         "updated_at": "2020-07-30T05:57:19.787245Z"
     },
     {
@@ -125,7 +125,7 @@
             "name": "CAPLAB",
             "location": "123123131"
         },
-        "order_requested_item": [
+        "order_supplied_item": [
             {
                 "item": {
                     "id": 1,
@@ -138,9 +138,8 @@
                 "updated_at": "2020-07-30T07:04:27.593359Z"
             }
         ],
-        "status": "INPROGRESS",
-        "order_supplied_item": [],
-        "date": "2020-07-30T06:13:04.492852Z",
+        "order_requested_item": [],
+        "created_at": "2020-07-30T06:13:04.492852Z",
         "updated_at": "2020-07-30T06:13:04.492889Z"
     }
 ]

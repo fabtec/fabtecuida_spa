@@ -44,7 +44,6 @@ export default class Api {
     if (!jwtAccessToken) {
       return false
     }
-
     return axios({
       method: 'post',
       url: `${API_HOST}/api/token/verify/`,
@@ -53,6 +52,28 @@ export default class Api {
       }
     })
       .then((res) => {
+        return true
+      })
+      .catch(() => {
+        const { jwtRefreshToken } = this.getTokens()
+        if (!jwtRefreshToken) {
+          return false
+        }
+        return this.refreshUser(jwtRefreshToken);
+      })
+  }
+
+  static async refreshUser(jwtRefreshToken) {
+    return axios({
+      method: 'post',
+      url: `${API_HOST}/api/token/refresh/`,
+      data: {
+        refresh: jwtRefreshToken
+      }
+    })
+      .then((res) => {
+        const { access, refresh } = res.data;
+        this.setTokens({ access, refresh });
         return true
       })
       .catch(() => {
@@ -86,6 +107,36 @@ export default class Api {
       )
   }
 
+  static getRequestedOrders (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/requested`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static getSuppliedOrders (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/orders/supplied`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static getSuppliedInventory (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/supplier-inventory/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),
@@ -96,5 +147,30 @@ export default class Api {
       .then((res) => {
         return res.data
       })
+  }
+
+  static PutOrdersSupplied (order_supplied_id, param) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'patch',
+      url: `${API_HOST}/api/orders-supplied/${order_supplied_id}/`,
+      data: param
+    }).then((res) => {
+      return res.data
+    })
+  }
+
+  static setOrdersSupplied ({ itemSelected, item_requested }) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/supplied-item/`,
+      data: {
+        'itemSelected': itemSelected, 
+        'requested_item': item_requested
+      }
+    }).then((res) => {
+      return res.data
+    })
   }
 }

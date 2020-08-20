@@ -17,6 +17,7 @@
         },
         "order_requested_item": [
             {
+                "id": 1,
                 "item": {
                     "id": 1,
                     "name": "MASCARILLAS",
@@ -28,8 +29,9 @@
                 "updated_at": "2020-07-30T06:35:06.387558Z"
             },
             {
+                "id": 2,
                 "item": {
-                    "id": 2,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -39,8 +41,9 @@
                 "updated_at": "2020-07-30T06:35:14.997500Z"
             },
             {
+                "id": 3,
                 "item": {
-                    "id": 3,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -50,8 +53,9 @@
                 "updated_at": "2020-07-30T06:35:20.490469Z"
             },
             {
+                "id": 3,
                 "item": {
-                    "id": 4,
+                    "id": 1,
                     "name": "MASCARILLAS",
                     "description": "asd"
                 },
@@ -83,6 +87,7 @@
         },
         "order_requested_item": [
             {
+                "id": 4,
                 "item": {
                     "id": 1,
                     "name": "MASCARILLAS",
@@ -94,6 +99,7 @@
                 "updated_at": "2020-07-30T06:35:25.847986Z"
             },
             {
+                "id": 5,
                 "item": {
                     "id": 1,
                     "name": "MASCARILLAS",
@@ -127,6 +133,7 @@
         },
         "order_requested_item": [
             {
+                "id": 6,
                 "item": {
                     "id": 1,
                     "name": "MASCARILLAS",
@@ -138,7 +145,6 @@
                 "updated_at": "2020-07-30T07:04:27.593359Z"
             }
         ],
-        "status": "INPROGRESS",
         "order_supplied_item": [],
         "date": "2020-07-30T06:13:04.492852Z",
         "updated_at": "2020-07-30T06:13:04.492889Z"
