@@ -44,7 +44,6 @@ export default class Api {
     if (!jwtAccessToken) {
       return false
     }
-
     return axios({
       method: 'post',
       url: `${API_HOST}/api/token/verify/`,
@@ -53,6 +52,28 @@ export default class Api {
       }
     })
       .then((res) => {
+        return true
+      })
+      .catch(() => {
+        const { jwtRefreshToken } = this.getTokens()
+        if (!jwtRefreshToken) {
+          return false
+        }
+        return this.refreshUser(jwtRefreshToken);
+      })
+  }
+
+  static async refreshUser(jwtRefreshToken) {
+    return axios({
+      method: 'post',
+      url: `${API_HOST}/api/token/refresh/`,
+      data: {
+        refresh: jwtRefreshToken
+      }
+    })
+      .then((res) => {
+        const { access, refresh } = res.data;
+        this.setTokens({ access, refresh });
         return true
       })
       .catch(() => {
@@ -137,17 +158,6 @@ export default class Api {
         'itemSelected': itemSelected, 
         'requested_item': item_requested
       }
-    }).then((res) => {
-      return res.data
-    })
-  }
-
-  static PutOrdersSupplied (order_supplied_id, param) {
-    return axios({
-      headers: Api.getAuthHeaders(),
-      method: 'patch',
-      url: `${API_HOST}/api/orders-supplied/${order_supplied_id}/`,
-      data: param
     }).then((res) => {
       return res.data
     })

@@ -26,6 +26,28 @@
 					"content-type": "application/json"
         },
         "file": "verify.json"
+			},
+			{
+				"status": 401,
+				"headers": {
+					"content-type": "application/json"
+        }
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/token/refresh/$",
+			"method": "POST",
+			"post": "{\"refresh\":\"([a-zA-Z0-9]){36}\"}"
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+        },
+        "file": "token.json"
 			}
 		]
 	},
