@@ -87,21 +87,9 @@ function NewOrderPage () {
         onClose={() => setShowAlert(false)} dismissible>
           Solicitud ingresada exitosamente
       </Alert>
-      <Tabs
-        activeKey={tabKey}
-        onSelect={(keyName) => setTabKey(keyName)}
-      >
-        <Tab eventKey="order" title="Nueva Solicitud">
-          <div className="row justify-content-center">
-            { form }
-          </div>
-        </Tab>
-        <Tab eventKey="offer" title="Nueva Oferta">
-          <div className="row justify-content-center">
-            { form }
-          </div>
-        </Tab>
-      </Tabs>
+      <div className="row justify-content-center">
+        { form }
+      </div>
     </div>
   )
 }

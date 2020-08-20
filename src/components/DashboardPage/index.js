@@ -46,6 +46,7 @@ function DashboardPage() {
           </div>
         </Tab>
       </Tabs>
+      {/* TODO: Cambiar nombre de este Modal o que modal sea wrapper que dibuje un detalle de forma dinámica */}
       {order ? (
         <Modal order={order} show={showOrder} handleClose={handleCloseOrder} />
       ) : null}

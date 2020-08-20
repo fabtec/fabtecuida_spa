@@ -2,31 +2,27 @@ import React, { useState, Fragment } from "react";
 import { Table, Badge } from "react-bootstrap";
 
 import { statusBadgesMap } from '../../services/utils';
-import "./DashboardTable.css";
+import "./InventoryTable.css";
 
-function DashboardTable({ orders = [], setOrder }) {
-
+function InventoryTable({ suppliers = [], setSupplier }) {
   const createRows = () =>
-    orders.map((order, index) => (
+    suppliers.map((supplier, index) => (
       <tr
-        key={order.id}
-        
+        key={supplier.id}
       >
         <td class="text-center">
           <button
             class="btn btn-success"
-            onClick={() => setOrder(order)}>
-              Ver más detalles
-          </button>
+            onClick={() => setSupplier(supplier)}
+          >Ver más detalles</button>
         </td>
         <td>{index + 1}</td>
-        <td>{order.entity.name}</td>
+        <td>{supplier.supplier.name}</td>
+        <td>{supplier.quantity}</td>
         <td>
-          <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
+          <Badge variant={statusBadgesMap[supplier.status]}>{supplier.status}</Badge>
         </td>
-        <td>{order.date}</td>
-        
-        
+        <td>{supplier.date}</td>
       </tr>
     ));
 
@@ -36,9 +32,10 @@ function DashboardTable({ orders = [], setOrder }) {
         <thead>
           <tr>
             <th></th>
-            <th>Número orden</th>
+            <th>Número inventario</th>
             <th>Entidad</th>
             <th>Estado</th>
+            <th>Cantidad</th>
             <th>Fecha</th>
           </tr>
         </thead>
@@ -48,4 +45,4 @@ function DashboardTable({ orders = [], setOrder }) {
   );
 }
 
-export default DashboardTable;
+export default InventoryTable;
