@@ -1,10 +1,10 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Table, Badge } from "react-bootstrap";
 
-import { statusBadgesMap } from '../../services/utils';
+import { statusBadgesMap, formatDate } from '../../services/utils';
 import "./DashboardTable.css";
 
-function DashboardTable({ orders = [], setOrder }) {
+function DashboardTable({ orders = [], setInventory }) {
 
   const createRows = () =>
     orders.map((order, index) => (
@@ -12,10 +12,10 @@ function DashboardTable({ orders = [], setOrder }) {
         key={order.id}
         
       >
-        <td class="text-center">
+        <td className="text-center">
           <button
-            class="btn btn-success"
-            onClick={() => setOrder(order)}>
+            className="btn btn-success"
+            onClick={() => setInventory(order)}>
               Ver más detalles
           </button>
         </td>
@@ -24,7 +24,7 @@ function DashboardTable({ orders = [], setOrder }) {
         <td>
           <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
         </td>
-        <td>{order.date}</td>
+        <td>{formatDate(order.date)}</td>
         
         
       </tr>

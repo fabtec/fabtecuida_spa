@@ -75,7 +75,7 @@ function DashboardSearch({ setSearch }) {
         <option value="2">Hospital Coquimbo</option>
       </Form.Control>
 
-      <Form.Check
+      {/* <Form.Check
         type="checkbox"
         className="mb-2 mr-sm-2"
         id="requested"
@@ -92,7 +92,7 @@ function DashboardSearch({ setSearch }) {
         value="SUPPLIED"
         onChange={handleCheckBox}
         checked={formValue.type.includes("SUPPLIED")}
-      />
+      /> */}
       <Button type="submit" className="mb-2">
         Buscar
       </Button>

@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import InventoryTable from "../InventoryTable";
 import Api from "../../services/api";
-import Modal from "../Modal";
+import InventoryInfoModal from "../InventoryInfoModal";
 
 function InventoryPage() {
   const [suppliers, setSuppliers] = useState([]);
-  const [supplier, setSupplier] = useState(null);
+  const [inventory, setInventory] = useState(null);
+  const [showInventory, setShowInventory] = useState(false);
+  const handleCloseInventory = () => setShowInventory(false);
+  const handleShowInventory = () => setShowInventory(true);
 
   const getSuppliedInventory = (params) =>
     Api.getSuppliedInventory(params).then((suppliersList) => {
@@ -17,12 +20,19 @@ function InventoryPage() {
     getSuppliedInventory();
   }, []);
 
+
+  useEffect(() => {
+    if (inventory) {
+      handleShowInventory();
+    }
+  }, [inventory]);
+
   return (
     <div>
-      <InventoryTable suppliers={suppliers} setSupplier={setSupplier} />
-      {/* {order ? (
-        <Modal order={order} show={showOrder} handleClose={handleCloseOrder} />
-      ) : null} */}
+      <InventoryTable suppliers={suppliers} setInventory={setInventory} />
+      {inventory ? (
+        <InventoryInfoModal inventory={inventory} show={showInventory} handleClose={handleCloseInventory} />
+      ) : null}
     </div>
   );
 }

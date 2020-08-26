@@ -1,28 +1,25 @@
 import React, { useState, Fragment } from "react";
 import { Table, Badge } from "react-bootstrap";
 
-import { statusBadgesMap } from '../../services/utils';
+import { formatDate } from '../../services/utils';
 import "./InventoryTable.css";
 
-function InventoryTable({ suppliers = [], setSupplier }) {
+function InventoryTable({ suppliers = [], setInventory }) {
   const createRows = () =>
     suppliers.map((supplier, index) => (
       <tr
         key={supplier.id}
       >
-        <td class="text-center">
+        <td className="text-center">
           <button
-            class="btn btn-success"
-            onClick={() => setSupplier(supplier)}
+            className="btn btn-success"
+            onClick={() => setInventory(supplier)}
           >Ver más detalles</button>
         </td>
         <td>{index + 1}</td>
         <td>{supplier.supplier.name}</td>
         <td>{supplier.quantity}</td>
-        <td>
-          <Badge variant={statusBadgesMap[supplier.status]}>{supplier.status}</Badge>
-        </td>
-        <td>{supplier.date}</td>
+        <td>{formatDate(supplier.created_at)}</td>
       </tr>
     ));
 
@@ -34,7 +31,6 @@ function InventoryTable({ suppliers = [], setSupplier }) {
             <th></th>
             <th>Número inventario</th>
             <th>Entidad</th>
-            <th>Estado</th>
             <th>Cantidad</th>
             <th>Fecha</th>
           </tr>
