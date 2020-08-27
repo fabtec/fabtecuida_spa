@@ -4,7 +4,7 @@ import { Table, Badge } from "react-bootstrap";
 import { statusBadgesMap, formatDate } from '../../services/utils';
 import "./DashboardTable.css";
 
-function DashboardTable({ orders = [], setInventory }) {
+function DashboardTable({ orders = [], setOrder }) {
 
   const createRows = () =>
     orders.map((order, index) => (
@@ -15,7 +15,7 @@ function DashboardTable({ orders = [], setInventory }) {
         <td className="text-center">
           <button
             className="btn btn-success"
-            onClick={() => setInventory(order)}>
+            onClick={() => setOrder(order)}>
               Ver más detalles
           </button>
         </td>
