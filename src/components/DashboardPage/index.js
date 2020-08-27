@@ -4,7 +4,7 @@ import DashboardCalendar from "../DashboardCalendar";
 import DashboardTable from "../DashboardTable";
 import DashboardSearch from "../DashboardSearch";
 import Api from "../../services/api";
-import Modal from "../Modal";
+import OrderInfoModal from "../OrderInfoModal";
 
 function DashboardPage() {
   const [orders, setOrders] = useState([]);
@@ -46,8 +46,9 @@ function DashboardPage() {
           </div>
         </Tab>
       </Tabs>
+      {/* TODO: Cambiar nombre de este Modal o que modal sea wrapper que dibuje un detalle de forma dinámica */}
       {order ? (
-        <Modal order={order} show={showOrder} handleClose={handleCloseOrder} />
+        <OrderInfoModal order={order} show={showOrder} handleClose={handleCloseOrder} />
       ) : null}
     </div>
   );

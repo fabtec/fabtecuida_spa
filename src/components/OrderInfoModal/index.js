@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Badge, Modal, Button } from "react-bootstrap";
-import { statusBadgesMap } from '../../services/utils';
+import { statusBadgesMap, formatDate } from '../../services/utils';
 
 export default function({ show, order, handleClose }) {
 
@@ -27,7 +27,7 @@ export default function({ show, order, handleClose }) {
 				<Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
 				<br/>
 				<br/>
-				<b>Fecha de solicitud:</b> {order.date}
+				<b>Fecha de solicitud:</b> {formatDate(order.date)}
 				<br/>
 				<br/>
 				<b>Productos Solicitados</b>

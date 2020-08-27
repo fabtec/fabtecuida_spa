@@ -1,7 +1,7 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Table, Badge } from "react-bootstrap";
 
-import { statusBadgesMap } from '../../services/utils';
+import { statusBadgesMap, formatDate } from '../../services/utils';
 import "./DashboardTable.css";
 
 function DashboardTable({ orders = [], setOrder }) {
@@ -10,15 +10,21 @@ function DashboardTable({ orders = [], setOrder }) {
     orders.map((order, index) => (
       <tr
         key={order.id}
-        onClick={() => setOrder(order)}
+        
       >
-        <td class="text-center"><button class="btn btn-success">Ver más detalles</button></td>
+        <td className="text-center">
+          <button
+            className="btn btn-success"
+            onClick={() => setOrder(order)}>
+              Ver más detalles
+          </button>
+        </td>
         <td>{index + 1}</td>
         <td>{order.entity.name}</td>
         <td>
           <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
         </td>
-        <td>{order.date}</td>
+        <td>{formatDate(order.date)}</td>
         
         
       </tr>

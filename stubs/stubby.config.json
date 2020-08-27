@@ -129,6 +129,21 @@
 		"request": {
 			"url": "^/api/supplier-inventory",
 			"method": "GET",
+		},
+		"response": [
+			{
+				"status": 200,
+				"headers": {
+					"content-type": "application/json"
+				},
+				"file": "supplier-inventory.json"
+			}
+		]
+	},
+	{
+		"request": {
+			"url": "^/api/supplier-inventory",
+			"method": "GET",
 			"query":{
 				"item": "(\\d+)"
 			}

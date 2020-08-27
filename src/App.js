@@ -15,6 +15,7 @@ import LoginPage from './components/LoginPage'
 import DashboardPage from './components/DashboardPage'
 import NewOrderPage from './components/NewOrderPage'
 import MatchStockPage from './components/MatchStockPage'
+import InventoryPage from './components/InventoryPage'
 import Layout from './components/Layout'
 
 function App () {
@@ -50,6 +51,11 @@ function App () {
           <Route path='/orders/new'>
             <Layout>
               <NewOrderPage />
+            </Layout>
+          </Route>
+          <Route path={['/inventory']}>
+            <Layout>
+              <InventoryPage />
             </Layout>
           </Route>
           <Route path='/orders/match'>
