@@ -209,4 +209,49 @@ export default class Api {
       return res.data
     })
   }
+
+  static getEntities (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/entities/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static createEntity (data) {
+    console.log(data)
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/entities/`,
+      data: data
+    })
+      .then((res) => {
+        return res.data
+      })
+  }
+
+  static getUsers (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/users/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static createUser (data) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/users/`,
+      data: data
+    })
+      .then((res) => {
+        return res.data
+      })
+  }
 }
