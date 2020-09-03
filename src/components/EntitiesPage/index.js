@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import InventoryTable from "../InventoryTable";
 import Api from "../../services/api";
-import InventoryInfoModal from "../InventoryInfoModal";
 import {Tabs, Tab, Form, Button, Table} from "react-bootstrap";
 import { formatDate } from '../../services/utils';
 
