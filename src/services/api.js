@@ -163,8 +163,17 @@ export default class Api {
     .then((res) => res.data);
   }
 
+  static createSuppliedInventory ({ supplier, item, quantity }) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/supplier-inventory/`,
+      data: { supplier, item, quantity }
+    })
+    .then((res) => res.data);
+  }
+
   static createOrder (data) {
-    console.log(data)
     return axios({
       headers: Api.getAuthHeaders(),
       method: 'post',
