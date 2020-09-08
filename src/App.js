@@ -16,6 +16,8 @@ import DashboardPage from './components/DashboardPage'
 import NewOrderPage from './components/NewOrderPage'
 import MatchStockPage from './components/MatchStockPage'
 import InventoryPage from './components/InventoryPage'
+import EntitiesPage from './components/EntitiesPage'
+import UsersPage from './components/UsersPage'
 import Layout from './components/Layout'
 
 function App () {
@@ -56,6 +58,16 @@ function App () {
           <Route path={['/inventory']}>
             <Layout>
               <InventoryPage />
+            </Layout>
+          </Route>
+          <Route path={['/entities']}>
+            <Layout>
+              <EntitiesPage />
+            </Layout>
+          </Route>
+          <Route path={['/users']}>
+            <Layout>
+              <UsersPage />
             </Layout>
           </Route>
           <Route path='/orders/match'>

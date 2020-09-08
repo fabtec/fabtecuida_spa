@@ -10,6 +10,10 @@ export default class Api {
     Cookies.set('jwt_refresh_token', refresh)
   }
 
+  static setAccessTokens ({ access }) {
+    Cookies.set('jwt_access_token', access)
+  }
+
   static getTokens () {
     return {
       jwtAccessToken: Cookies.get('jwt_access_token'),
@@ -37,6 +41,17 @@ export default class Api {
         password
       }
     })
+  }
+
+  static getUsers () {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/users/`
+    })
+      .then((res) => {
+        return res.data
+      })
   }
 
   static async verifyUser () {
@@ -72,8 +87,8 @@ export default class Api {
       }
     })
       .then((res) => {
-        const { access, refresh } = res.data;
-        this.setTokens({ access, refresh });
+        const { access } = res.data;
+        this.setAccessTokens({ access });
         return true
       })
       .catch(() => {
@@ -86,6 +101,17 @@ export default class Api {
       headers: Api.getAuthHeaders(),
       method: 'get',
       url: `${API_HOST}/api/entities/`
+    })
+      .then((res) => {
+        return res.data
+      })
+  }
+
+  static getItems () {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/items/`
     })
       .then((res) => {
         return res.data
@@ -137,12 +163,22 @@ export default class Api {
     .then((res) => res.data);
   }
 
+  static createSuppliedInventory ({ supplier, item, quantity }) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/supplier-inventory/`,
+      data: { supplier, item, quantity }
+    })
+    .then((res) => res.data);
+  }
+
   static createOrder (data) {
     return axios({
       headers: Api.getAuthHeaders(),
       method: 'post',
-      url: `${API_HOST}/api/orders/`,
-      data
+      url: `${API_HOST}/api/create-orders/`,
+      data: data
     })
       .then((res) => {
         return res.data
@@ -172,5 +208,50 @@ export default class Api {
     }).then((res) => {
       return res.data
     })
+  }
+
+  static getEntities (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/entities/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static createEntity (data) {
+    console.log(data)
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/entities/`,
+      data: data
+    })
+      .then((res) => {
+        return res.data
+      })
+  }
+
+  static getUsers (params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/users/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
+  static createUser (data) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'post',
+      url: `${API_HOST}/api/users/`,
+      data: data
+    })
+      .then((res) => {
+        return res.data
+      })
   }
 }
