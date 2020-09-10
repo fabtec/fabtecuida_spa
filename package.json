@@ -35,6 +35,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/standard",
+    "lint-fix": "./node_modules/.bin/standard --fix",
+    "heroku-postbuild": "npm run static_server"
   },
   "eslintConfig": {
     "extends": "react-app"
