@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import dayjs from 'dayjs';
 
-const API_HOST = process.env.REACT_APP_API_HOST || 'http://localhost:8000'
+
+const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:8000' : 'https://api.fabtecuida.cl';
 
 export default class Api {
   static setTokens ({ access, refresh }) {
@@ -33,6 +33,7 @@ export default class Api {
   }
 
   static loginUser ({ username, password }) {
+    
     return axios({
       method: 'post',
       url: `${API_HOST}/api/token/`,
@@ -221,7 +222,6 @@ export default class Api {
   }
 
   static createEntity (data) {
-    console.log(data)
     return axios({
       headers: Api.getAuthHeaders(),
       method: 'post',
