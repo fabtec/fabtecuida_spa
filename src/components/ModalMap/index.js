@@ -25,7 +25,7 @@ function ModalMap(props) {
         <Modal
             show={props.showModal}
             onHide={props.handleClose}
-            dialogClassName="modal-90w"
+            dialogClassName="modal-90w modal-dialog-map"
             aria-labelledby="example-custom-modal-styling-title"
         >
             <Modal.Header closeButton>
