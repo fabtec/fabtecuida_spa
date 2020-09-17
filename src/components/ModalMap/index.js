@@ -14,7 +14,8 @@ function ModalMap(props) {
         if(props.showModal){
             Api.getEntities()
             .then((entitiesList) => {
-                setEntitiesList(entitiesList)
+                console.log(entitiesList)
+                setEntitiesList(entitiesList.features)
             })
         }else{
             setEntitiesList([])

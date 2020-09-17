@@ -15,7 +15,8 @@ function EntityMapModal(props) {
         if(props.showModal){
             Api.getEntity(props.idEntity)
             .then((entity) => {
-                SetCoordinates([entity.location.coordinates[1], entity.location.coordinates[0]])
+                console.log(entity)
+                SetCoordinates([entity.geometry.coordinates[1], entity.geometry.coordinates[0]])
                 setEntity(entity)
             })
         }else{

@@ -13,11 +13,11 @@ function MapLayout(props) {
             <Marker
                 key={entity.id}
                 position={[
-                entity.location.coordinates[1], 
-                entity.location.coordinates[0]]
+                entity.geometry.coordinates[1], 
+                entity.geometry.coordinates[0]]
                 }
                 >
-                <Popup>{entity.name}</Popup>
+                <Popup>{entity.properties.name}</Popup>
                 </Marker>
             ))}
         </Map>
