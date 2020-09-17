@@ -4,7 +4,11 @@ import { Table, Badge, Button } from "react-bootstrap";
 import { statusBadgesMap, formatDate } from '../../services/utils';
 import ModalMap from '../ModalMap';
 import EntityMapModal from '../EntityMapModal';
+import { faInfoCircle, faMapMarkedAlt, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import "./DashboardTable.css";
+
 
 function DashboardTable({ orders = [], setOrder }) {
   const [showModal, setShowModal] = useState(false);
@@ -19,9 +23,10 @@ function DashboardTable({ orders = [], setOrder }) {
       >
         <td className="text-center">
           <Button
+            className="mr-2"
             variant="success"
             onClick={() => setOrder(order)}>
-              Ver más detalles
+              <FontAwesomeIcon icon={faInfoCircle} />
           </Button>
           <Button 
             variant="danger"
@@ -29,7 +34,7 @@ function DashboardTable({ orders = [], setOrder }) {
               setIdEntity(order.entity.id);
               setShowModalSingle(true);
             }}>
-              Mostrar Ubicación
+              <FontAwesomeIcon icon={faMapMarkerAlt} />
           </Button>
         </td>
         <td>{index + 1}</td>
@@ -44,7 +49,7 @@ function DashboardTable({ orders = [], setOrder }) {
   return (
     <Fragment>
       <Button variant="primary" className="mb-4" onClick={()=>setShowModal(true)}>
-          Mostrar Mapa
+          Mostrar Mapa <FontAwesomeIcon icon={faMapMarkedAlt} />
       </Button>
       <Table striped bordered hover>
         <thead>

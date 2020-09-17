@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
 
 import Api from "../../services/api";
-import MapLayout from "../MapLayout"
+import MapLayout from "../MapLayout";
 
 import "./EntityMapModal.css";
 
