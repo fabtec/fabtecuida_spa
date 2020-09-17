@@ -3,11 +3,14 @@ import { Table, Badge, Button } from "react-bootstrap";
 
 import { statusBadgesMap, formatDate } from '../../services/utils';
 import ModalMap from '../ModalMap';
+import EntityMapModal from '../EntityMapModal';
 import "./DashboardTable.css";
 
 function DashboardTable({ orders = [], setOrder }) {
   const [showModal, setShowModal] = useState(false);
-
+  const [showModalSingle, setShowModalSingle] = useState(false);
+  const [idEntity, setIdEntity] = useState(0);
+  
   const createRows = () =>
     orders.map((order, index) => (
       <tr
@@ -15,11 +18,19 @@ function DashboardTable({ orders = [], setOrder }) {
         
       >
         <td className="text-center">
-          <button
-            className="btn btn-success"
+          <Button
+            variant="success"
             onClick={() => setOrder(order)}>
               Ver más detalles
-          </button>
+          </Button>
+          <Button 
+            variant="danger"
+            onClick={()=>{
+              setIdEntity(order.entity.id);
+              setShowModalSingle(true);
+            }}>
+              Mostrar Ubicación
+          </Button>
         </td>
         <td>{index + 1}</td>
         <td>{order.entity.name}</td>
@@ -48,7 +59,7 @@ function DashboardTable({ orders = [], setOrder }) {
         <tbody>{createRows()}</tbody>
       </Table>
       <ModalMap showModal={showModal} handleClose={()=> setShowModal(false)} />
-      
+      <EntityMapModal showModal={showModalSingle} idEntity={idEntity} handleClose={()=> setShowModalSingle(false)} />
     </Fragment>
   );
 }

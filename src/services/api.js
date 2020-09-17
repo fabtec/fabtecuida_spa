@@ -199,6 +199,16 @@ export default class Api {
     .then((res) => res.data);
   }
 
+  static getEntity (id, params = null) {
+    return axios({
+      headers: Api.getAuthHeaders(),
+      method: 'get',
+      url: `${API_HOST}/api/entities/${id}/`,
+      params: params || {}
+    })
+    .then((res) => res.data);
+  }
+
   static createEntity (data) {
     return axios({
       headers: Api.getAuthHeaders(),
