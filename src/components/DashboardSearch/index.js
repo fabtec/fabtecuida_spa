@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState } from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import './DashboardSearch.css';
 
@@ -25,25 +25,6 @@ function DashboardSearch({ setSearch }) {
       ...formValue,
       status: event.target.value,
     });
-
-  const handleCheckBox = ({ target }) => {
-    const { value, checked } = target;
-
-    if(!checked) {
-      setFormValue({
-        ...formValue,
-        type: formValue.type
-          .replace(value, '')
-      });
-    } else {
-      setFormValue({
-        ...formValue,
-        type: formValue.type
-          ? ''
-          : `${value}`
-      });
-    }
-  }
   
   return (
     <Form inline onSubmit={onSearch} className="search-form">

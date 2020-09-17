@@ -14,14 +14,10 @@ function LoginPage() {
   const handleChangePassword = (event) => setPassword(event.target.value);
   const [username, setUsername] = useState("");
   const handleChangeUsername = (event) => setUsername(event.target.value);
-
-  const [isPerformingLogin, setIsPerformingLogin] = useState(false);
   const [isErrorPresent, setIsErrorPresent] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsPerformingLogin(true);
-
     Api.loginUser({ username, password })
       .then((res) => {
         setIsErrorPresent(false);
@@ -32,9 +28,6 @@ function LoginPage() {
       .catch(() => {
         setIsErrorPresent(true);
       })
-      .finally(() => {
-        setIsPerformingLogin(false);
-      });
   };
 
   const renderAlert = (isError) => {

@@ -72,7 +72,7 @@ export default function ({ show, item, handleClose }) {
 
   useEffect(() => {
     getSuppliedInventory();
-  }, [item]);
+  });
 
   return (
     <Modal size="lg" show={show} onHide={handleClose}>

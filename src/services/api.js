@@ -43,18 +43,7 @@ export default class Api {
       }
     })
   }
-
-  static getUsers () {
-    return axios({
-      headers: Api.getAuthHeaders(),
-      method: 'get',
-      url: `${API_HOST}/api/users/`
-    })
-      .then((res) => {
-        return res.data
-      })
-  }
-
+  
   static async verifyUser () {
     const { jwtAccessToken } = Api.getTokens()
     if (!jwtAccessToken) {
@@ -94,17 +83,6 @@ export default class Api {
       })
       .catch(() => {
         return false
-      })
-  }
-
-  static getEntities () {
-    return axios({
-      headers: Api.getAuthHeaders(),
-      method: 'get',
-      url: `${API_HOST}/api/entities/`
-    })
-      .then((res) => {
-        return res.data
       })
   }
 

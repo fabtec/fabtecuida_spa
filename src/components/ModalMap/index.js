@@ -16,6 +16,8 @@ function ModalMap(props) {
             .then((entitiesList) => {
                 setEntitiesList(entitiesList)
             })
+        }else{
+            setEntitiesList([])
         }
     }, [props.showModal]);
 
