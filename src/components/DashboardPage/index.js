@@ -42,13 +42,13 @@ function DashboardPage() {
         </Tab>
         <Tab eventKey="table" title="Tabla">
           <div className="row justify-content-center">
-            <DashboardTable orders={orders} setOrder={setOrder} />
+            <DashboardTable orders={orders} setOrder={setOrder} setShowModalInfo={setShowOrder} />
           </div>
         </Tab>
       </Tabs>
       {/* TODO: Cambiar nombre de este Modal o que modal sea wrapper que dibuje un detalle de forma dinámica */}
       {order ? (
-        <OrderInfoModal order={order} show={showOrder} handleClose={handleCloseOrder} />
+        <OrderInfoModal order={order} show={showOrder} handleClose={()=> setShowOrder(false)} />
       ) : null}
     </div>
   );

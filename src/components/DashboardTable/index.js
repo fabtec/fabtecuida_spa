@@ -10,22 +10,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./DashboardTable.css";
 
 
-function DashboardTable({ orders = [], setOrder }) {
+function DashboardTable({ orders = [], setOrder, setShowModalInfo }) {
   const [showModal, setShowModal] = useState(false);
   const [showModalSingle, setShowModalSingle] = useState(false);
   const [idEntity, setIdEntity] = useState(0);
   
   const createRows = () =>
     orders.map((order, index) => (
-      <tr
-        key={order.id}
-        
-      >
+      <tr key={order.id} >
         <td className="text-center">
           <Button
             className="mr-2"
             variant="success"
-            onClick={() => setOrder(order)}>
+            onClick={() => {
+              setOrder(order)
+              setShowModalInfo(true)
+            }}>
               <FontAwesomeIcon icon={faInfoCircle} />
           </Button>
           <Button 
