@@ -72,7 +72,7 @@ function MatchStockPage() {
           {`${item.quantity} ${item.item.name} en camino desde`} <b>{item.supplier.name}</b>
         </div>
         <div className="col-sm-6">
-          <Button onClick={() => handleComplete(item)} disabled={item.status == "DONE"}>Completar</Button>
+          <Button onClick={() => handleComplete(item)} disabled={item.status === "DONE"}>Completar</Button>
         </div>
       </div>
       </ListGroupItem>

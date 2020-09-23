@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import Api from "../../services/api";
 import {Tabs, Tab, Form, Button, Table} from "react-bootstrap";
-import { formatDate } from '../../services/utils';
 
 function UsersPage() {
     const [firstName, setFirstName] = useState();

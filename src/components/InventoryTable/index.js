@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from "react";
-import { Table, Badge } from "react-bootstrap";
+import React, { Fragment } from "react";
+import { Table } from "react-bootstrap";
 
 import { formatDate } from '../../services/utils';
 import "./InventoryTable.css";

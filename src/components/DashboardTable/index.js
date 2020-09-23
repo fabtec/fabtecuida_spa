@@ -1,40 +1,41 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Table, Badge, Button, Modal } from "react-bootstrap";
-
-import Api from "../../services/api";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import React, { Fragment, useState } from "react";
+import { Table, Badge, Button } from "react-bootstrap";
 
 import { statusBadgesMap, formatDate } from '../../services/utils';
+import ModalMap from '../ModalMap';
+import EntityMapModal from '../EntityMapModal';
+import { faInfoCircle, faMapMarkedAlt, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./DashboardTable.css";
 
-function DashboardTable({ orders = [], setOrder }) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  const [entitiesList, setEntitiesList] = useState([]);
-
-  useEffect(() => {
-    Api.getEntities()
-    .then((entitiesList) => {
-        setEntitiesList(entitiesList)
-    })
-
-  }, []);
-
+function DashboardTable({ orders = [], setOrder, setShowModalInfo }) {
+  const [showModal, setShowModal] = useState(false);
+  const [showModalSingle, setShowModalSingle] = useState(false);
+  const [idEntity, setIdEntity] = useState(0);
+  
   const createRows = () =>
     orders.map((order, index) => (
-      <tr
-        key={order.id}
-        
-      >
+      <tr key={order.id} >
         <td className="text-center">
-          <button
-            className="btn btn-success"
-            onClick={() => setOrder(order)}>
-              Ver más detalles
-          </button>
+          <Button
+            className="mr-2"
+            variant="success"
+            onClick={() => {
+              setOrder(order)
+              setShowModalInfo(true)
+            }}>
+              <FontAwesomeIcon icon={faInfoCircle} />
+          </Button>
+          <Button 
+            variant="danger"
+            onClick={()=>{
+              setIdEntity(order.entity.id);
+              setShowModalSingle(true);
+            }}>
+              <FontAwesomeIcon icon={faMapMarkerAlt} />
+          </Button>
         </td>
         <td>{index + 1}</td>
         <td>{order.entity.name}</td>
@@ -47,8 +48,8 @@ function DashboardTable({ orders = [], setOrder }) {
   
   return (
     <Fragment>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
+      <Button variant="primary" className="mb-4" onClick={()=>setShowModal(true)}>
+          Mostrar Mapa <FontAwesomeIcon icon={faMapMarkedAlt} />
       </Button>
       <Table striped bordered hover>
         <thead>
@@ -62,40 +63,8 @@ function DashboardTable({ orders = [], setOrder }) {
         </thead>
         <tbody>{createRows()}</tbody>
       </Table>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Map center={[45.4, -75.7]} zoom={12}>
-            <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-            {entitiesList.map(entity => (
-            <Marker
-                key={entity.id}
-                position={[
-                entity.location.coordinates[1], 
-                entity.location.coordinates[0]]
-                }
-                >
-                <Popup>{entity.name}</Popup>
-                </Marker>
-            ))}
-        </Map>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+      <ModalMap showModal={showModal} handleClose={()=> setShowModal(false)} />
+      <EntityMapModal showModal={showModalSingle} idEntity={idEntity} handleClose={()=> setShowModalSingle(false)} />
     </Fragment>
   );
 }

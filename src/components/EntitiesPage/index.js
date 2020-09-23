@@ -3,18 +3,91 @@ import Api from "../../services/api";
 import {Tabs, Tab, Form, Button, Table} from "react-bootstrap";
 import { formatDate } from '../../services/utils';
 
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+  } from "use-places-autocomplete";
+
+import useOnclickOutside from "react-cool-onclickoutside";
+
 function EntitiesPage() {
 
     const [nameEntity, setnameEntity] = useState();
-    const [locationEntity, setlocationEntity] = useState();
     const [managerEntity, setmanagerEntity] = useState([]);
     const [usersList, setusersList] = useState([]);
     const [entitiesList, setEntitiesList] = useState([]);
+    const [coordinates, setCoordinates] = useState([]);
+    const [address, setAddress] = useState("");
+
+    //AUTOCOMPLETE
+    const {
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+      } = usePlacesAutocomplete({
+        requestOptions: {
+          /* Define search scope here */
+        },
+        debounce: 300,
+      });
+      const ref = useOnclickOutside(() => {
+        // When user clicks outside of the component, we can dismiss
+        // the searched suggestions by calling this method
+        clearSuggestions();
+      });
+    
+      const handleInput = (e) => {
+        // Update the keyword of the input element
+        setValue(e.target.value);
+        setAddress(e.target.value);
+      };
+    
+      const handleSelect = ({ description }) => () => {
+        // When user selects a place, we can replace the keyword without request data from API
+        // by setting the second parameter to "false"
+        setValue(description, false);
+        clearSuggestions();
+    
+        // Get latitude and longitude via utility functions
+        getGeocode({ address: description })
+          .then((results) => getLatLng(results[0]))
+          .then(({ lat, lng }) => {
+                console.log("📍 Coordinates: ", { lat, lng });
+                setCoordinates([lng, lat])
+          })
+          .catch((error) => {
+            console.log("😱 Error: ", error);
+          });
+      };
+    
+      const renderSuggestions = () =>
+        data.map((suggestion) => {
+          const {
+            id,
+            structured_formatting: { main_text, secondary_text },
+          } = suggestion;
+    
+          return (
+            <li key={id} onClick={handleSelect(suggestion)}>
+              <strong>{main_text}</strong> <small>{secondary_text}</small>
+            </li>
+          );
+        });
+
+
+
+    //END AUTOCOMPLETE
+
+    
+    
 
     useEffect(() => {
         Api.getEntities()
           .then((entitiesList) => {
-            setEntitiesList(entitiesList)
+            console.log(entitiesList.features)
+            setEntitiesList(entitiesList.features)
           })
         
         Api.getUsers()
@@ -25,7 +98,7 @@ function EntitiesPage() {
       }, []);
 
     const handleChangenameEntity     = (event) => setnameEntity(event.target.value);
-    const handleChangelocationEntity = (event) => setlocationEntity(event.target.value);
+    const handleChangeAddress = (event) => setAddress(event.target.value);
     const onSelectedUserChange = (event) => {
         setmanagerEntity([event.target.value])
     }
@@ -34,13 +107,16 @@ function EntitiesPage() {
         event.preventDefault();
         
         Api.createEntity({
-              name: nameEntity,
-              location: locationEntity,
-              manager: managerEntity
-          })
+            name: nameEntity,
+            "location": {
+                "type": "Point",
+                "coordinates": coordinates
+            },
+            "manager": managerEntity
+        })
           .then((res) => {
-              console.log(res);
-            alert("Guardado Correctamente")
+                console.log(res);
+                alert("Guardado Correctamente")
           })
           .catch((error) =>{
               console.log(error);
@@ -60,8 +136,8 @@ function EntitiesPage() {
         <tr
             key={entity.id}
         >
-            <td>{entity.name}</td>
-            <td>{entity.manager}</td>
+            <td>{entity.properties.name}</td>
+            <td>{entity.properties.manager}</td>
             <td>{formatDate(entity.created_at)}</td>
         </tr>
         ));
@@ -91,10 +167,20 @@ function EntitiesPage() {
                         <Form.Control type="text" />
                     </Form.Group> */}
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Coordenadas</Form.Label>
-                        <Form.Control type="text" onChange={handleChangelocationEntity}/>
+                    <Form.Group controlId="formAddress">
+                        <Form.Label>Dirección</Form.Label>
+                        <div ref={ref}>
+                        <Form.Control
+                            value={value}
+                            onChange={handleInput}
+                            disabled={!ready}
+                        />
+                        {/* We can use the "status" to decide whether we should display the dropdown or not */}
+                        {status === "OK" && <ul>{renderSuggestions()}</ul>}
+                    </div>
                     </Form.Group>
+
+                    
 
                     <Button variant="primary" type="submit" className="float-right">
                         Guardar Entidad
