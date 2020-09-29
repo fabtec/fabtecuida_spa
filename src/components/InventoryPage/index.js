@@ -21,6 +21,7 @@ function InventoryPage() {
 
   const getSuppliedInventory = (params) =>
     Api.getSuppliedInventory(params).then((suppliersList) => {
+      console.log(suppliersList)
       setSuppliers(suppliersList);
     });
 
@@ -47,7 +48,7 @@ function InventoryPage() {
   const entitiesOptions = entitiesList
     .map((entity) => (
       <option key={entity.id} value={entity.id}>
-        {entity.name}
+        {entity.properties.name}
       </option>)
     );
 

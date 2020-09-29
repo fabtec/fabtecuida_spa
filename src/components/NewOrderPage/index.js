@@ -63,7 +63,7 @@ function NewOrderPage () {
   const entitiesOptions = entitiesList
     .map((entity) => (
       <option key={entity.id} value={entity.id}>
-        {entity.name}
+        {entity.properties.name}
       </option>)
     );
 

@@ -17,7 +17,7 @@ function InventoryTable({ suppliers = [], setInventory }) {
           >Ver más detalles</button>
         </td>
         <td>{index + 1}</td>
-        <td>{supplier.supplier.name}</td>
+        <td>{supplier.supplier.properties.name}</td>
         <td>{supplier.quantity}</td>
         <td>{formatDate(supplier.created_at)}</td>
       </tr>

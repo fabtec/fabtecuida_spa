@@ -86,8 +86,8 @@ function EntitiesPage() {
     useEffect(() => {
         Api.getEntities()
           .then((entitiesList) => {
-            console.log(entitiesList.features)
-            setEntitiesList(entitiesList.features)
+            console.log(entitiesList)
+            setEntitiesList(entitiesList)
           })
         
         Api.getUsers()
@@ -138,7 +138,7 @@ function EntitiesPage() {
         >
             <td>{entity.properties.name}</td>
             <td>{entity.properties.manager}</td>
-            <td>{formatDate(entity.created_at)}</td>
+            <td>{formatDate(entity.properties.created_at)}</td>
         </tr>
         ));
 

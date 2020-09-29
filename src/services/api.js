@@ -196,7 +196,7 @@ export default class Api {
       url: `${API_HOST}/api/entities/`,
       params: params || {}
     })
-    .then((res) => res.data);
+    .then((res) => res.data.features);
   }
 
   static getEntity (id, params = null) {

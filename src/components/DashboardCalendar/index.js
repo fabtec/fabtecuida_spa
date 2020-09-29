@@ -5,7 +5,7 @@ import '@fullcalendar/core/locales/es';
 import './DashboardCalendar.css';
 
 function DashboardCalendar ({ orders = [], setOrder }) {
-	const handleSelectOrder = (arg) => {
+	const handleSelectOrder = (arg) => {		
 		setOrder({
 			...arg.event._def.extendedProps,
 			title: arg.event.title,

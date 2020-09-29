@@ -10,7 +10,7 @@ export default function({ show, inventory, handleClose }) {
 				<Modal.Title>{inventory.item.name}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<b>Provisto por:</b> {inventory.supplier.name} 
+				<b>Provisto por:</b> {inventory.supplier.properties.name} 
 				<br />
 				<br />
 				<b>Cantidad:</b> {inventory.quantity}

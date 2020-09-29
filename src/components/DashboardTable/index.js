@@ -38,7 +38,7 @@ function DashboardTable({ orders = [], setOrder, setShowModalInfo }) {
           </Button>
         </td>
         <td>{index + 1}</td>
-        <td>{order.entity.name}</td>
+        <td>{order.entity.properties.name}</td>
         <td>
           <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
         </td>
