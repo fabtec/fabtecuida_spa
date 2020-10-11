@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Cookies from 'js-cookie'
+import { writeCookie } from '../services/utils';
 
 const initData = {
-    loading: false,
+    loading: true,
     active: false,
     error: false
 }
@@ -44,6 +45,9 @@ export const loginAction = (username, password) => async(dispatch) => {
 
         Cookies.set('jwt_access_token', res.data.access)
         Cookies.set('jwt_refresh_token', res.data.refresh)
+        
+        writeCookie('jwt_access_token', res.data.access, 90)
+        writeCookie('jwt_refresh_token', res.data.refresh, 90)
 
         dispatch({
             type: USER_SUCCESS,
@@ -79,6 +83,9 @@ export const refreshTokenAction = () => async(dispatch) => {
 
         Cookies.set('jwt_access_token', res.data.access)
 
+        writeCookie('jwt_access_token', res.data.access, 90)
+        writeCookie('jwt_refresh_token', Cookies.get('jwt_refresh_token'), 90)
+
     } catch (error) {
         console.log(error)
         dispatch({
@@ -102,15 +109,22 @@ export const verifyTokenAction = () => async(dispatch) => {
     
             dispatch({
                 type: USER_SUCCESS,
-                payload: res.data
+                payload: {
+                    access: Cookies.get('jwt_access_token'),
+                    refresh: Cookies.get('jwt_access_token')
+                }
             })
+
+            writeCookie('jwt_refresh_token', Cookies.get('jwt_refresh_token'), 90)
            
         } catch (error) {
             console.log(error)
-            dispatch(refreshTokenAction())
+            await dispatch(refreshTokenAction())
         }
+    }else{
+        dispatch({
+            type: "NOT_LOADING"
+        })
     }
-
-    
 }
 

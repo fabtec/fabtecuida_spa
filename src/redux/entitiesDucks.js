@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { verifyTokenAction } from './authDucks';
+import { getAuthHeaders } from '../services/utils'
 
 const initData = {
     array : []
@@ -19,10 +21,16 @@ export default function entitiesReducer(state = initData, action){
 
 export const getEntitiesAction = () => async (dispatch, getState) => {
     try{
-        const res = await axios.get("http://localhost:8000/api/entities/")
+        await dispatch(verifyTokenAction());
+        const res = await axios({
+            headers: getAuthHeaders(),
+            method: 'get',
+            url: "http://localhost:8000/api/entities/"
+        })
+
         dispatch({
             type: GET_ENTITIES_SUCCESS,
-            payload: res.data.results
+            payload: res.data.results.features
         })
         
     }catch(error){
