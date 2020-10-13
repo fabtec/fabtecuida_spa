@@ -3,9 +3,11 @@ import thunk from 'redux-thunk'
 
 import entitiesReducer from './entitiesDucks'
 import auhReducer from './authDucks'
+import userReducer from './userDucks'
 
 const rootReducer = combineReducers({
     auth: auhReducer,
+    user: userReducer,
     entities: entitiesReducer
 })
 

@@ -9,20 +9,20 @@ const initData = {
     haveToken: false,
 }
 
-const LOADING = 'LOADING'
-const USER_SUCCESS = 'USER_SUCCESS'
-const USER_ERROR = 'USER_ERROR'
+const LOADING_LOGIN = 'LOADING_LOGIN'
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const LOGIN_ERROR = 'LOGIN_ERROR'
 const SING_OUT = 'SING_OUT'
 const NOT_COOKIES = 'NOT_COOKIES'
 
 export default function auhReducer (state = initData, action){
 
     switch(action.type){
-        case LOADING:
+        case LOADING_LOGIN:
             return {...state, loading: true, error: false}
-        case USER_ERROR:
+        case LOGIN_ERROR:
             return {...state, loading: false, error: true}
-        case USER_SUCCESS:
+        case LOGIN_SUCCESS:
             return {...state, loading: false, active: true, tokens: action.payload, error: false}
         case SING_OUT:
             return {...initData}
@@ -38,7 +38,7 @@ export default function auhReducer (state = initData, action){
 export const loginAction = (username, password) => async(dispatch) => {
 
     dispatch({
-        type: LOADING
+        type: LOADING_LOGIN
     })
 
     try {
@@ -47,6 +47,8 @@ export const loginAction = (username, password) => async(dispatch) => {
             password: password
         })
 
+        console.log(res.data)
+
         Cookies.set('jwt_access_token', res.data.access)
         Cookies.set('jwt_refresh_token', res.data.refresh)
         
@@ -54,13 +56,13 @@ export const loginAction = (username, password) => async(dispatch) => {
         writeCookie('jwt_refresh_token', res.data.refresh, 90)
 
         dispatch({
-            type: USER_SUCCESS,
+            type: LOGIN_SUCCESS,
             payload: res.data
         })
     } catch (error) {
         console.log(error)
         dispatch({
-            type: USER_ERROR
+            type: LOGIN_ERROR
         })
     }
 }
@@ -69,7 +71,7 @@ export const loginAction = (username, password) => async(dispatch) => {
 export const refreshTokenAction = () => async(dispatch) => {
 
     dispatch({
-        type: LOADING
+        type: LOADING_LOGIN
     })
 
     try {
@@ -78,7 +80,7 @@ export const refreshTokenAction = () => async(dispatch) => {
         })
 
         dispatch({
-            type: USER_SUCCESS,
+            type: LOGIN_SUCCESS,
             payload: {
                 access: res.data.access,
                 refresh: Cookies.get('jwt_refresh_token')
@@ -93,7 +95,7 @@ export const refreshTokenAction = () => async(dispatch) => {
     } catch (error) {
         console.log(error)
         dispatch({
-            type: USER_ERROR
+            type: LOGIN_ERROR
         })
     }
 }
@@ -101,7 +103,7 @@ export const refreshTokenAction = () => async(dispatch) => {
 //REVISA SI EL TOKEN DE ACCESO AÚN ESTA DISPONIBLE
 export const verifyTokenAction = () => async(dispatch) => {
     dispatch({
-        type: LOADING
+        type: LOADING_LOGIN
     })
     
     if(Cookies.get('jwt_access_token')!=null){
@@ -111,7 +113,7 @@ export const verifyTokenAction = () => async(dispatch) => {
             })
     
             dispatch({
-                type: USER_SUCCESS,
+                type: LOGIN_SUCCESS,
                 payload: {
                     access: Cookies.get('jwt_access_token'),
                     refresh: Cookies.get('jwt_access_token')
@@ -130,4 +132,3 @@ export const verifyTokenAction = () => async(dispatch) => {
         })
     }
 }
-

@@ -1,44 +1,53 @@
-import React, { useContext } from "react";
-import { NavLink } from 'react-router-dom'
+import React, { useContext, useEffect } from "react";
 import { AppContext } from '../../context/AppContext';
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserAction } from '../../redux/userDucks';
+import { Dropdown, Nav, Button } from 'react-bootstrap';
 const Navbar = () => {
     const { toggleSidebar } = useContext(AppContext);
 
+    const dispatch = useDispatch();
+    const user = useSelector(store => store.user.array)  
+
+    useEffect(()=>{
+        dispatch(getUserAction())
+    },[dispatch])
+
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+          href="./"
+          ref={ref}
+          className="nav-link dropdown-toggle" 
+          onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+          }}
+        >
+           { user.first_name } { user.last_name }
+        </a>
+      ));
+      
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button className="btn btn-light" id="menu-toggle" onClick={toggleSidebar}>
-            <span className="navbar-toggler-icon"></span>
-        </button>
+        <Nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <Button variant="light" id="menu-toggle" onClick={toggleSidebar}>
+                <span className="navbar-toggler-icon"></span>
+            </Button>
+            <ul className="nav navbar-nav ml-auto">
+                <Nav.Item className="dropdown">
+                    <Dropdown>
+                        <Dropdown.Toggle as={CustomToggle} id="dropdown-basic"></Dropdown.Toggle>
 
-        <div>
-                <div className="d-flex">
-                    <NavLink 
-                        className="btn btn-dark mr-2" 
-                        to="/"
-                        exact
-                    >
-                        Inicio
-                    </NavLink>
-                    <NavLink 
-                        className="btn btn-dark mr-2" 
-                        to="/admin"
-                    >
-                        Admin
-                    </NavLink>
-
-                    <NavLink 
-                        className="btn btn-dark" 
-                        to="/login"
-                    >
-                        Login
-                    </NavLink>
-
-                </div>
-            </div>  
-        </nav>
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="/profile">Perfil</Dropdown.Item>
+                            <Dropdown.Item href="/sign-out">Cerrar Sesión</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Nav.Item>
+            </ul>     
+        </Nav>
     )    
 }
+
 
 export default Navbar
