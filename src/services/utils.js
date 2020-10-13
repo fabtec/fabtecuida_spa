@@ -36,3 +36,10 @@ export const getAuthHeaders = () => {
 
 }
 
+
+export const signOut = () => {
+  Cookies.remove('jwt_access_token')
+  Cookies.remove('jwt_refresh_token')
+}
+
+

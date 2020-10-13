@@ -3,6 +3,8 @@ import { AppContext } from '../../context/AppContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserAction } from '../../redux/userDucks';
 import { Dropdown, Nav, Button } from 'react-bootstrap';
+import { signOut } from '../../services/utils'
+
 const Navbar = () => {
     const { toggleSidebar } = useContext(AppContext);
 
@@ -26,6 +28,11 @@ const Navbar = () => {
            { user.first_name } { user.last_name }
         </a>
       ));
+
+      const logOut = () =>{
+        signOut();
+        window.location.href = '/'
+      }
       
 
     return (
@@ -40,7 +47,7 @@ const Navbar = () => {
 
                         <Dropdown.Menu>
                             <Dropdown.Item href="/profile">Perfil</Dropdown.Item>
-                            <Dropdown.Item href="/sign-out">Cerrar Sesión</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>logOut()}>Cerrar Sesión</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Nav.Item>
