@@ -19,7 +19,7 @@ function LoginPage() {
 
   useEffect(()=>{
     dispatch(verifyTokenAction());
-  },[])
+  },[dispatch])
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,14 +27,13 @@ function LoginPage() {
   };
 
   useEffect(()=>{
-    
-    if(!store.auth.active){
-      setPageLoading(store.auth.loading)
-    }else{
+    if(store.auth.active){
       window.location.href = "/";
+    }else{
+      setPageLoading(store.auth.loading)
     }
-    
-  },[store.auth.loading])
+
+  },[store.auth.loading, store.auth.active])
 
   const renderAlert = () => {
       return store.auth.error ? (

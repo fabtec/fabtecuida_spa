@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import {Link, NavLink} from 'react-router-dom'
+import React, { useContext } from "react";
+import { NavLink } from 'react-router-dom'
+import { AppContext } from '../../context/AppContext';
 
 
 const Navbar = () => {
-
-    // const dispatch = useDispatch();
-    // const store = useSelector(store => store);
-    
-    // useEffect(()=>{
-    //     dispatch(verifyTokenAction());
-    // },[])
+    const { toggleSidebar } = useContext(AppContext);
 
     return (
-        <div className="navbar navbar-dark bg-dark">
-            <Link to="/" className="navbar-brand">React Admin</Link>
-            <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button className="btn btn-light" id="menu-toggle" onClick={toggleSidebar}>
+            <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div>
                 <div className="d-flex">
                     <NavLink 
                         className="btn btn-dark mr-2" 
@@ -39,9 +36,9 @@ const Navbar = () => {
                     </NavLink>
 
                 </div>
-            </div>
-        </div>
-    )
+            </div>  
+        </nav>
+    )    
 }
 
 export default Navbar

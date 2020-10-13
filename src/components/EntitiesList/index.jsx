@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { getEntitiesAction } from '../../redux/entitiesDucks'
 
@@ -7,12 +7,14 @@ const EntitiesList = () => {
     const dispatch = useDispatch()
 
     const entities = useSelector(store => store.entities.array)
-    console.log(entities)
+
+    useEffect(()=>{
+        dispatch(getEntitiesAction())
+    },[dispatch])
 
     return (
         <div>
             lista de entidades
-            <button onClick={()=> dispatch(getEntitiesAction())}>OBTENER ENTIDADES</button>
             <ul>
                 {
                     entities.map(item=>(

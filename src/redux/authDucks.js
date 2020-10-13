@@ -5,13 +5,15 @@ import { writeCookie } from '../services/utils';
 const initData = {
     loading: true,
     active: false,
-    error: false
+    error: false,
+    haveToken: false,
 }
 
 const LOADING = 'LOADING'
 const USER_SUCCESS = 'USER_SUCCESS'
 const USER_ERROR = 'USER_ERROR'
 const SING_OUT = 'SING_OUT'
+const NOT_COOKIES = 'NOT_COOKIES'
 
 export default function auhReducer (state = initData, action){
 
@@ -24,8 +26,10 @@ export default function auhReducer (state = initData, action){
             return {...state, loading: false, active: true, tokens: action.payload, error: false}
         case SING_OUT:
             return {...initData}
+        case NOT_COOKIES:
+            return {...state, loading: false, active: false, error: false}
         default: 
-            return {...state, loading: false}
+            return {...state}
     }
 
 }
@@ -96,14 +100,13 @@ export const refreshTokenAction = () => async(dispatch) => {
 
 //REVISA SI EL TOKEN DE ACCESO AÚN ESTA DISPONIBLE
 export const verifyTokenAction = () => async(dispatch) => {
-
     dispatch({
         type: LOADING
     })
     
     if(Cookies.get('jwt_access_token')!=null){
         try {
-            const res = await axios.post("http://localhost:8000/api/token/verify/",{
+            await axios.post("http://localhost:8000/api/token/verify/",{
                 token: Cookies.get('jwt_access_token')
             })
     
@@ -119,11 +122,11 @@ export const verifyTokenAction = () => async(dispatch) => {
            
         } catch (error) {
             console.log(error)
-            await dispatch(refreshTokenAction())
+            await dispatch(await refreshTokenAction())
         }
     }else{
         dispatch({
-            type: "NOT_LOADING"
+            type: "NOT_COOKIES"
         })
     }
 }
