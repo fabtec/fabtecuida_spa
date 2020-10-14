@@ -1,8 +1,8 @@
-import React from "react";/*, { useState, useEffect }*/ 
+import React, { useEffect, useState } from "react";
 // import Api from "../../services/api";
-// import {Tabs, Tab, Form, Button, Table} from "react-bootstrap";
-// import { formatDate } from '../../services/utils';
-import EntitiesList from  '../EntitiesList';
+import { Form, Button, Table, Col, Row } from "react-bootstrap";
+import { formatDate } from '../../services/utils';
+// import EntitiesList from  '../EntitiesList';
 
 // import usePlacesAutocomplete, {
 //     getGeocode,
@@ -10,9 +10,13 @@ import EntitiesList from  '../EntitiesList';
 //   } from "use-places-autocomplete";
 
 // import useOnclickOutside from "react-cool-onclickoutside";
-import { Provider } from "react-redux";
-import generateStore from "../../redux/store";
+// import { Provider } from "react-redux";
+// import generateStore from "../../redux/store";
 // import { createStore } from "redux";
+
+import { useDispatch, useSelector } from 'react-redux'
+import { getEntitiesAction } from '../../redux/entitiesDucks'
+import EntitiesCreateModal from '../EntitiesCreateModal'
 
 function EntitiesPage() {
 
@@ -135,84 +139,46 @@ function EntitiesPage() {
     //     </option>)
     //   );
 
-    //   const createRows = () =>
-    //     entitiesList.map((entity, index) => (
-    //     <tr
-    //         key={entity.id}
-    //     >
-    //         <td>{entity.properties.name}</td>
-    //         <td>{entity.properties.manager}</td>
-    //         <td>{formatDate(entity.properties.created_at)}</td>
-    //     </tr>
-    //     ));
-    
-    const store = generateStore()
+  const dispatch = useDispatch();
+  const entities = useSelector(store => store.entities.array)
 
-    return (
-      <Provider store={store}>
-        <EntitiesList />
-      </Provider>
-        // <Tabs defaultActiveKey="addUser" id="uncontrolled-tab-example">
-        //     <Tab eventKey="addUser" title="Añadir Entitdad">
-        //     <Form onSubmit={handleSubmit}>
+  const createRows = () =>
+    entities.map((entity, index) => (
+    <tr key={entity.id} >
+      <td>{entity.properties.name}</td>
+      <td>{entity.properties.manager}</td>
+      <td>{formatDate(entity.properties.created_at)}</td>
+    </tr>
+  ));
 
-        //         <Form.Group controlId="formBasicEmail">
-        //             <Form.Label>Representante</Form.Label>
-        //                 <Form.Control
-        //                     as="select"
-        //                     onChange={onSelectedUserChange}
-        //                 >
-        //                     <option key={0} value={0}>---</option>
-        //                     { usersOptions }
-        //                 </Form.Control>
-        //             </Form.Group>
-        //             <Form.Group controlId="formBasicEmail">
-        //                 <Form.Label>Nombre</Form.Label>
-        //                 <Form.Control type="text" onChange={handleChangenameEntity} />
-        //             </Form.Group>
+  useEffect(()=>{
+    dispatch(getEntitiesAction())
+  },[dispatch])
+  
+  const [showModalSingle, setShowModalSingle] = useState(false);
 
-        //             {/* <Form.Group controlId="formBasicPassword">
-        //                 <Form.Label>Dirección</Form.Label>
-        //                 <Form.Control type="text" />
-        //             </Form.Group> */}
-
-        //             <Form.Group controlId="formAddress">
-        //                 <Form.Label>Dirección</Form.Label>
-        //                 <div ref={ref}>
-        //                 <Form.Control
-        //                     value={value}
-        //                     onChange={handleInput}
-        //                     disabled={!ready}
-        //                 />
-        //                 {/* We can use the "status" to decide whether we should display the dropdown or not */}
-        //                 {status === "OK" && <ul>{renderSuggestions()}</ul>}
-        //             </div>
-        //             </Form.Group>
-
-                    
-
-        //             <Button variant="primary" type="submit" className="float-right">
-        //                 Guardar Entidad
-        //             </Button>
-        //         </Form>
-        //     </Tab>
-        //     <Tab eventKey="userList" title="Entitdades">
-        //         <Table striped bordered hover>
-        //             <thead>
-        //                 <tr>
-        //                 <th>Nombre</th>
-        //                 <th>Representante</th>
-        //                 <th>Fecha de creación</th>
-        //                 </tr>
-        //             </thead>
-        //             <tbody>
-        //                 {createRows()}
-        //             </tbody>
-        //         </Table>
-        //     </Tab>
-        // </Tabs>
-        
-      );
+  return (
+    <Row>
+      <Col xs={12} className="text-center mb-4">
+        <Button onClick={()=>setShowModalSingle(true)}>Crear Nueva Entidad</Button>
+      </Col>
+      <Col xs={12}>
+        <Table responsive striped bordered hover>
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th>Representante</th>
+                <th>Fecha de creación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {createRows()}
+            </tbody>
+        </Table>
+      </Col>
+      <EntitiesCreateModal showModal={showModalSingle} handleClose={()=> setShowModalSingle(false)} />
+    </Row>
+  );
 }
 
 export default EntitiesPage;

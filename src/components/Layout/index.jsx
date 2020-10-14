@@ -13,6 +13,7 @@ import DashboardPage from '../DashboardPage';
 import { AppContext } from '../../context/AppContext';
 import { verifyTokenAction } from '../../redux/authDucks';
 import LoadingPage from '../LoadingPage';
+import EntitiesPage from '../EntitiesPage';
 
 const Layout = ({ children }) => {
 
@@ -56,6 +57,7 @@ const Layout = ({ children }) => {
                         <Switch>
                             <Route component={ DashboardPage } path="/" exact/>
                             <Route component={ LoginPage } path="/login" exact/>
+                            <Route component={ EntitiesPage } path="/entities" exact/>
                         </Switch>
                     
                 </div>
