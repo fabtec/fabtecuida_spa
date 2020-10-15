@@ -6,13 +6,24 @@ const initData = {
     array : []
 }
 
-const GET_ENTITIES_SUCCESS = 'GET_ENTITIES_SUCCESS'
+const initEntity = { }
 
+const GET_ENTITIES_SUCCESS = 'GET_ENTITIES_SUCCESS'
+const CREATE_ENTITIES_SUCCESS = 'CREATE_ENTITIES_SUCCESS'
 
 export default function entitiesReducer(state = initData, action){
     switch(action.type){
         case GET_ENTITIES_SUCCESS:
             return {...state, array: action.payload}
+        default:
+            return state
+    }
+}
+
+export function entitiyReducer(state = initEntity, action){
+    switch(action.type){
+        case CREATE_ENTITIES_SUCCESS:
+            return action.payload
         default:
             return state
     }
@@ -30,10 +41,30 @@ export const getEntitiesAction = () => async (dispatch, getState) => {
 
         dispatch({
             type: GET_ENTITIES_SUCCESS,
-            payload: res.data.results.features
+            payload: res.data.features
         })
         
     }catch(error){
-        console.log(error);
+       // console.log(error);
+    }
+}
+
+export const createEntitiesAction = (data) => async (dispatch, getState) => {
+    try{
+        await dispatch(verifyTokenAction());
+        const res = await axios({
+            headers: getAuthHeaders(),
+            method: 'post',
+            url: "http://localhost:8000/api/entities/",
+            data: data
+        })
+
+        dispatch({
+            type: CREATE_ENTITIES_SUCCESS,
+            payload: res
+        })
+        
+    }catch(error){
+        //console.log(error);
     }
 } 

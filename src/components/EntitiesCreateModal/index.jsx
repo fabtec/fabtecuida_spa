@@ -1,7 +1,11 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { Button, Modal, Form, ListGroup } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import useOnclickOutside from "react-cool-onclickoutside";
 import usePlacesAutocomplete, { getGeocode, getLatLng} from "use-places-autocomplete";
+import { getUsersAction } from '../../redux/usersDucks'
+import { createEntitiesAction } from '../../redux/entitiesDucks'
+
 import './EntitiesCreateModal.css'
 
 const EntitiesCreateModal = ({showModal, handleClose}) => {
@@ -11,10 +15,17 @@ const EntitiesCreateModal = ({showModal, handleClose}) => {
     const [address, setAddress] = useState("");
 
     const handleChangenameEntity     = (event) => setnameEntity(event.target.value);
-    const handleChangeAddress = (event) => setAddress(event.target.value);
     const onSelectedUserChange = (event) => {
         setmanagerEntity([event.target.value])
     }
+
+    const dispatch = useDispatch()
+    const users = useSelector(store => store.users.array)
+    const entity = useSelector(store => store.entity)
+
+    useEffect(()=>{
+      dispatch(getUsersAction())
+  },[dispatch])
 
     //AUTOCOMPLETE
     const {
@@ -59,101 +70,89 @@ const EntitiesCreateModal = ({showModal, handleClose}) => {
       };
     
       const renderSuggestions = () =>
-        data.map((suggestion) => {
+        data.map((suggestion, index) => {
           const {
-            id,
             structured_formatting: { main_text, secondary_text },
           } = suggestion;
     
           return (
-              
-            <ListGroup.Item action key={id} onClick={handleSelect(suggestion)}>
+            <ListGroup.Item action key={index} onClick={handleSelect(suggestion)}>
               <strong>{main_text}</strong> <small>{secondary_text}</small>
             </ListGroup.Item>
           );
         });
 
-
-
     //END AUTOCOMPLETE
 
-    // const usersOptions = usersList
-    //   .map((user) => (
-    //     <option key={user.id} value={user.id}>
-    //       {user.first_name} {user.last_name}
-    //     </option>)
-    //   );
+    const usersOptions = users
+      .map((user) => (
+        <option key={user.id} value={user.id}>
+          {user.first_name} {user.last_name}
+        </option>
+      ));
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert("se esta guardando")
-        
-        // Api.createEntity({
-        //     name: nameEntity,
-        //     "location": {
-        //         "type": "Point",
-        //         "coordinates": coordinates
-        //     },
-        //     "manager": managerEntity
-        // })
-        //   .then((res) => {
-        //         console.log(res);
-        //         alert("Guardado Correctamente")
-        //   })
-        //   .catch((error) =>{
-        //       console.log(error);
-        //   })
+
+        dispatch(createEntitiesAction(
+          {
+            name: nameEntity,
+            address: address,
+            "location": {
+                "type": "Point",
+                "coordinates": coordinates
+            },
+            "manager": managerEntity
+          }
+        ))
       };
 
-    return (        
-        <Modal show={showModal} onHide={handleClose}>
-            <Modal.Header>
-                <Modal.Title>Crear Nueva Entidad</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Representante</Form.Label>
-                        <Form.Control
-                            as="select"
-                            onChange={onSelectedUserChange}
-                        >
-                            <option key={0} value={0}>---</option>
-                            {/* { usersOptions } */}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control type="text" onChange={handleChangenameEntity} />
-                    </Form.Group>
+    useEffect(()=>{
+      if(entity.status === 201){
+          handleClose()
+      }
+    },[entity, handleClose])
 
-                    <Form.Group controlId="formAddress">
-                        <Form.Label>Dirección</Form.Label>
-                        <div ref={ref}>
-                        <Form.Control
-                            value={value}
-                            onChange={handleInput}
-                            disabled={!ready}
-                            autocomplete="ÑÖaddress"
-                        />
-                        {status === "OK" && <ListGroup className="address">{renderSuggestions()}</ListGroup>}
-                    </div>
-                    </Form.Group>
-                    <Button variant="primary" type="submit" className="float-right">
-                        Guardar Entidad
-                    </Button>
-                </Form>
-                
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cerrar
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Guardar
-                </Button>
-            </Modal.Footer>
-        </Modal>
+    return (        
+      <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header>
+              <Modal.Title>Crear Nueva Entidad</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+              <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formBasicEmail">
+                      <Form.Label>Representante</Form.Label>
+                      <Form.Control
+                          as="select"
+                          onChange={onSelectedUserChange}
+                      >
+                          <option key={0} value={0}>---</option>
+                          { usersOptions }
+                      </Form.Control>
+                  </Form.Group>
+                  <Form.Group controlId="formBasicEmail">
+                      <Form.Label>Nombre</Form.Label>
+                      <Form.Control type="text" onChange={ handleChangenameEntity } />
+                  </Form.Group>
+
+                  <Form.Group controlId="formAddress">
+                      <Form.Label>Dirección</Form.Label>
+                      <div ref={ref}>
+                      <Form.Control
+                          value={value}
+                          onChange={handleInput}
+                          disabled={!ready}
+                          autoComplete="ÑÖaddress"
+                      />
+                      {status === "OK" && <ListGroup className="address">{renderSuggestions()}</ListGroup>}
+                  </div>
+                  </Form.Group>
+                  <Button variant="primary" type="submit" className="float-right">
+                      Guardar Entidad
+                  </Button>
+              </Form>
+          </Modal.Body>
+      </Modal>
     )
 }
 
