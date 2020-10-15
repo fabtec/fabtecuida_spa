@@ -1,12 +1,13 @@
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 
-import entitiesReducer, {entitiyReducer} from './entitiesDucks'
+import entitiesReducer, { entitiyReducer } from './entitiesDucks'
 import auhReducer from './authDucks'
 import userReducer from './userDucks'
 import usersReducer from './usersDucks'
 import inventoryReducer, { addItemInventoryReducer } from './inventoryDucks'
 import itemsReducer from './itemDucks'
+import ordersReducer, { orderReducer } from './ordersDucks'
 
 const rootReducer = combineReducers({
     auth: auhReducer,
@@ -17,6 +18,8 @@ const rootReducer = combineReducers({
     inventory: inventoryReducer,
     itemAdded: addItemInventoryReducer,
     items: itemsReducer,
+    order: orderReducer,
+    orders: ordersReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
