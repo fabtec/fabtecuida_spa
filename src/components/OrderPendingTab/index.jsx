@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Row, Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrdersAction } from '../../redux/ordersDucks'
 
@@ -31,7 +31,7 @@ const OrderPendingTab = ({ showModal }) => {
         <div className="mt-4 p-2">
             {
             orders.map((order) =>
-                <Card className="col-12 p-0 mb-4 shadow">
+                <Card className="col-12 p-0 mb-4">
                     <Card.Header as="h5">{order.title}</Card.Header>
                     <ListGroup className="list-group-flush">
                         { getItemRow(order)}
