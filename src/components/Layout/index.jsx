@@ -14,6 +14,8 @@ import { AppContext } from '../../context/AppContext';
 import { verifyTokenAction } from '../../redux/authDucks';
 import LoadingPage from '../LoadingPage';
 import EntitiesPage from '../EntitiesPage';
+import OrdersPage from '../OrdersPage';
+import InventoryPage from '../InventoryPage';
 
 const Layout = ({ children }) => {
 
@@ -53,13 +55,13 @@ const Layout = ({ children }) => {
             <div id="page-content-wrapper">
                 <Navbar />
                 <div className="mt-4 container-fluid">
-                    
-                        <Switch>
-                            <Route component={ DashboardPage } path="/" exact/>
-                            <Route component={ LoginPage } path="/login" exact/>
-                            <Route component={ EntitiesPage } path="/entities" exact/>
-                        </Switch>
-                    
+                  <Switch>
+                      <Route component={ DashboardPage } path="/" exact/>
+                      <Route component={ LoginPage } path="/login" exact/>
+                      <Route component={ EntitiesPage } path="/entities" exact/>
+                      <Route component={ OrdersPage } path="/orders/" exact/>
+                      <Route component={ InventoryPage } path="/inventory/" exact/>
+                  </Switch>
                 </div>
             </div>
         </div>

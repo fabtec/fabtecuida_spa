@@ -1,10 +1,10 @@
-import React from "react";
-import EntitiesList from  '../EntitiesList';
+import React from "react"
 import './DashboardPage.css'
+
 const DashboardPage = () => {
 
     return (
-        <EntitiesList />
+        <div>Dashboard</div>
     )
 }
 
