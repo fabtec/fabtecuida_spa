@@ -8,6 +8,8 @@ import usersReducer from './usersDucks'
 import inventoryReducer, { addItemInventoryReducer } from './inventoryDucks'
 import itemsReducer from './itemDucks'
 import ordersReducer, { orderReducer } from './ordersDucks'
+import OrdersSuppliedReducer from './orderSuppliedDucks'
+
 
 const rootReducer = combineReducers({
     auth: auhReducer,
@@ -19,7 +21,8 @@ const rootReducer = combineReducers({
     itemAdded: addItemInventoryReducer,
     items: itemsReducer,
     order: orderReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
+    order_supplied: OrdersSuppliedReducer,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

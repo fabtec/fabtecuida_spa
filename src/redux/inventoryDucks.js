@@ -30,13 +30,14 @@ export function addItemInventoryReducer(state = initSupplier, action){
 }
 
 
-export const getInventoryAction = () => async (dispatch, getState) => {
+export const getInventoryAction = (params = null) => async (dispatch, getState) => {
     try{
         await dispatch(verifyTokenAction());
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'get',
-            url: "http://localhost:8000/api/supplier-inventory/"
+            url: "http://localhost:8000/api/supplier-inventory/",
+            params: params || {}
         })
 
         dispatch({
@@ -67,4 +68,4 @@ export const addInventoryAction = ({ supplier, item, quantity }) => async (dispa
     }catch(error){
         //console.log(error);
     }
-} 
+}

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button,Col, Row, Tabs, Tab } from "react-bootstrap";
 import OrderCreateModal from '../OrderCreateModal';
 import OrderPendingTab from '../OrderPendingTab'
+import OrderInProgressTab from '../OrderInProgressTab'
+
 import './OrdersPage.css'
 
 const OrdersPage = () => {
-    
     const [showModalSingle, setShowModalSingle] = useState(false);
     const [tabKey, setTabKey] = useState("pending");
 
@@ -17,13 +18,16 @@ const OrdersPage = () => {
                 </Col>
                 <Col xs={12}>
                     <Tabs activeKey={tabKey} onSelect={(keyName) => setTabKey(keyName)}>
-                    <Tab eventKey="pending" title="Pendientes">
-                        <OrderPendingTab showModal={showModalSingle} />
+                    <Tab eventKey="pending" title="Pendientes" >
+                        <OrderPendingTab tabKey={tabKey} />
+                    </Tab>                    
+                    <Tab eventKey="inprogress" title="En Progreso">
+                        <OrderInProgressTab tabKey={tabKey} />
                     </Tab>
                     </Tabs>
                 </Col>
             </Row>
-            <OrderCreateModal showModal={showModalSingle} handleClose={()=> setShowModalSingle(false)} />
+            <OrderCreateModal showModal={ showModalSingle } handleClose={()=> setShowModalSingle(false)} />
         </div> 
       )
     }
