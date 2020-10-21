@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button,Col, Row, Tabs, Tab } from "react-bootstrap";
-import OrderCreateModal from '../OrderCreateModal';
+import React, { useState } from "react"
+import { Button,Col, Row, Tabs, Tab } from "react-bootstrap"
+import OrderCreateModal from '../OrderCreateModal'
 import OrderPendingTab from '../OrderPendingTab'
 import OrderInProgressTab from '../OrderInProgressTab'
-
+import OrderCompleteTab from '../OrderCompleteTab'
 import './OrdersPage.css'
 
 const OrdersPage = () => {
@@ -14,7 +14,7 @@ const OrdersPage = () => {
         <div>
             <Row>
                 <Col xs={12} className="text-center mb-4">
-                    <Button onClick={()=>setShowModalSingle(true)}>Crear Nueva Orden</Button>
+                    <Button className="shadow" onClick={()=>setShowModalSingle(true)}>Crear Nueva Orden</Button>
                 </Col>
                 <Col xs={12}>
                     <Tabs activeKey={tabKey} onSelect={(keyName) => setTabKey(keyName)}>
@@ -23,6 +23,9 @@ const OrdersPage = () => {
                     </Tab>                    
                     <Tab eventKey="inprogress" title="En Progreso">
                         <OrderInProgressTab tabKey={tabKey} />
+                    </Tab>
+                    <Tab eventKey="complete" title="Completadas">
+                        <OrderCompleteTab tabKey={tabKey} />
                     </Tab>
                     </Tabs>
                 </Col>

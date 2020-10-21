@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap"
+import { Card, ListGroup, ListGroupItem, Button, Alert } from "react-bootstrap"
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrdersAction } from '../../redux/ordersDucks'
 import MatchStockModal from '../MatchStockModal'
@@ -8,33 +8,32 @@ const OrderPendingTab = (tab) => {
     const [showModalassign, setShowModalAssign] = useState(false);
     const [itemSelected, setItemSelected] = useState([]);
     const dispatch = useDispatch();
+    const [alertShow, setAlertShow] = useState(false);
+
     const orders = useSelector(store => store.orders)
+    const order = useSelector(store => store.order)
+    const order_supplied = useSelector(store => store.order_supplied)
+   
 
     const handleAssing = (item) => {
         setItemSelected(item);
         setShowModalAssign(true);
     }
 
-    // useEffect(()=>{
-    //     dispatch(getOrdersAction({status:"PENDING"}))
-    // },[dispatch, showModalassign])
-
     useEffect(()=>{
         if(tab.tabKey==="pending"){
             dispatch(getOrdersAction({status:"PENDING"}))
-            
-        }
-    },[dispatch])
-
-    useEffect(()=>{
-        if(!orders.loading)
-            if(tab.tabKey==="pending"){
-                console.log(orders)
+            if(order.status === 201){
+                setAlertShow(true)
+            }else{
+                setAlertShow(false)
             }
-    },[tab, orders])
-
+        }
+    },[order, order_supplied, tab.tabKey, dispatch])
+ 
     return (
         <div className="mt-4 p-2">
+            { alertShow ? (<Alert variant="success" onClose={() => setAlertShow(false)} dismissible>Orden Creada Correctamente</Alert>) : null}
             {
             orders.array.map((order) =>
                 <Card key={order.id} className="col-12 p-0 mb-4">
@@ -49,7 +48,7 @@ const OrderPendingTab = (tab) => {
                                         {`${item_desc.quantity} ${item_desc.item.name}`}
                                     </div>
                                     <div className="col-sm-4">
-                                        <Button onClick={() => handleAssing(item_desc) }> Asignar </Button>
+                                        <Button className="shadow" onClick={() => handleAssing(item_desc) }> Asignar </Button>
                                     </div>
                                 </div>
                             </ListGroupItem>

@@ -11,6 +11,7 @@ const initOrder = { }
 
 const GET_ORDERS_SUCCESS = 'GET_ORDERS_SUCCESS'
 const CREATE_OREDER_SUCCESS = 'CREATE_OREDER_SUCCESS'
+const UPDATE_OREDER_SUCCESS = 'UPDATE_OREDER_SUCCESS'
 const LOADING_ENTITIES = 'LOADING_ENTITIES'
 
 export default function ordersReducer(state = initData, action){
@@ -28,6 +29,8 @@ export function orderReducer(state = initOrder, action){
     switch(action.type){
         case CREATE_OREDER_SUCCESS:
             return action.payload
+        case UPDATE_OREDER_SUCCESS:
+                return action.payload
         default:
             return state
     }
@@ -75,6 +78,26 @@ export const createOrderAction = (data) => async (dispatch, getState) => {
 
         dispatch({
             type: CREATE_OREDER_SUCCESS,
+            payload: res
+        })
+        
+    }catch(error){
+        //console.log(error);
+    }
+}
+
+export const suppliedOrderAction = (order_supplied_id, data) => async (dispatch, getState) => {
+    try{
+        await dispatch(verifyTokenAction());
+        const res = await axios({
+            headers: getAuthHeaders(),
+            method: 'patch',
+            url: `http://localhost:8000/api/orders-supplied/${order_supplied_id}/`,
+            data: data
+        })
+
+        dispatch({
+            type: UPDATE_OREDER_SUCCESS,
             payload: res
         })
         

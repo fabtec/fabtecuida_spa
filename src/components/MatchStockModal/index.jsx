@@ -11,19 +11,16 @@ const MatchStockModal  = ({ showModal, handleClose, item }) => {
 
     const dispatch = useDispatch();
     const inventory = useSelector(store => store.inventory.array)
-    const order_supplied = useSelector(store => store.order_supplied)
 
     useEffect(()=>{
         dispatch(getInventoryAction({item: item.item?.id}))
         dispatch(getOrdersSuppliedAction())
-    },[dispatch, showModal])
+    },[dispatch, showModal, item])
 
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(setOrdersSuppliedAction({ itemSelected, item_requested }))
-        if(order_supplied.status === 200){
-            handleClose()
-        }
+        handleClose()
     }
 
     const handleChangeClick = (e) =>{

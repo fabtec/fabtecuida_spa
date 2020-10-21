@@ -16,7 +16,6 @@ const OrderCreateModal = ({showModal, handleClose}) => {
     const users = useSelector(store => store.users.array)
     const entities = useSelector(store => store.entities.array)
     const items = useSelector(store => store.items.array)
-    const order = useSelector(store => store.order)
 
     const onSelectedEntityChange = (event) => {
         setSelectedEntity(event.target.value)
@@ -34,7 +33,8 @@ const OrderCreateModal = ({showModal, handleClose}) => {
             }
         }
 
-        dispatch(createOrderAction(data_json))            
+        dispatch(createOrderAction(data_json))
+        handleClose()
     }
 
     useEffect(()=>{
@@ -42,12 +42,6 @@ const OrderCreateModal = ({showModal, handleClose}) => {
         dispatch(getEntitiesAction())
         dispatch(getItemsAction())
     },[dispatch])
-
-    useEffect(()=>{
-        if(order.status === 201){
-            handleClose()
-    }
-    },[order, handleClose])
 
 
     const addItem = () => {
@@ -77,7 +71,7 @@ const OrderCreateModal = ({showModal, handleClose}) => {
       }
 
     return (        
-        <Modal show={showModal} onHide={handleClose}>
+        <Modal show={showModal} onHide={()=>handleClose()}>
             <Modal.Header>
                 <Modal.Title>Crear Nueva Orden</Modal.Title>
             </Modal.Header>
