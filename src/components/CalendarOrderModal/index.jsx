@@ -20,9 +20,6 @@ const CalendarOrderModal = ({ show, order, handleClose }) => {
                 <Modal.Title>{order.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {/* <b>Entidad:</b> {order.entity.properties.name}  */}
-                {/* <br />
-                <br /> */}
                 <b>Estado:</b>
                 <Badge variant={statusBadgesMap[order.status]}>{order.status}</Badge>
                 <br/>
