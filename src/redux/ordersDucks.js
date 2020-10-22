@@ -57,7 +57,8 @@ export const getOrdersAction = (params = null) => async (dispatch, getState) => 
             payload: res.data
                 .map(order => ({
                     ...order,
-                    title: `${order.entity.properties.name}`
+                    title: `${order.entity.properties.name}`,
+                    color: order.order_supplied_item.length === 0 ? '#dc3545' : order.order_requested_item.length === order.order_supplied_item.length ? '#28a745': '#ffc107'
                 }))
         })
         

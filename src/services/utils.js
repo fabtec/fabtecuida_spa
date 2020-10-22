@@ -9,7 +9,7 @@ export const formatDate = (dateString) => {
 };
 
 export const statusBadgesMap = {
-  'PENDING': 'primary',
+  'PENDING': 'danger',
   'INPROGRESS': 'warning',
   'DONE': 'success',
 };

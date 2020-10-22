@@ -1,3 +1,15 @@
 .row > .fc {
   width: 100%;
 }
+
+.fc-toolbar-title::first-letter{
+  text-transform: capitalize;
+}
+
+.fc-scrollgrid a {
+  color: unset;
+}
+
+.fc-daygrid-event.fc-daygrid-dot-event.fc-event.fc-event-start.fc-event-end{
+  cursor: pointer;
+}
