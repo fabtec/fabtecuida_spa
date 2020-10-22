@@ -67,7 +67,6 @@ const Layout = ({ children }) => {
         </div>
     </Router>
     )
-
   }
 
   

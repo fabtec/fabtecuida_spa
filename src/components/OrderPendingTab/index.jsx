@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, ListGroup, ListGroupItem, Button, Alert } from "react-bootstrap"
 import { useDispatch, useSelector } from 'react-redux'
+import BeatLoader from 'react-spinners/BeatLoader'
 import { getOrdersAction } from '../../redux/ordersDucks'
 import MatchStockModal from '../MatchStockModal'
 
@@ -34,8 +35,18 @@ const OrderPendingTab = (tab) => {
     return (
         <div className="mt-4 p-2">
             { alertShow ? (<Alert variant="success" onClose={() => setAlertShow(false)} dismissible>Orden Creada Correctamente</Alert>) : null}
-            {
-            orders.array.map((order) =>
+            {orders.loading ? 
+            <div className="text-center"> 
+                <BeatLoader
+                    size={20}
+                    margin={6}
+                    color='#24426c'
+                    loading={orders.loading}
+                />
+                <p>Cargando...</p>
+            </div>
+            : orders.array
+            .map((order) =>
                 <Card key={order.id} className="col-12 p-0 mb-4">
                     <Card.Header as="h5">{order.title}</Card.Header>
                     <ListGroup className="list-group-flush">
