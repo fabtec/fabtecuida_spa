@@ -1,0 +1,6 @@
+.list-group.address{
+    z-index: 999999;
+    position: absolute;
+    padding-right: 2rem;
+    width: 100%;
+}
