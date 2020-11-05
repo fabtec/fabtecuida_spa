@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { verifyTokenAction } from './authDucks';
-import { getAuthHeaders } from '../services/utils'
+import { getAuthHeaders, API_HOST } from '../services/utils'
 
 const initData = {
     loading: true,
@@ -48,7 +48,7 @@ export const getOrdersAction = (params = null) => async (dispatch, getState) => 
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'get',
-            url: "http://localhost:8000/api/orders/",
+            url: `${API_HOST}/api/orders/`,
             params: params || {}
         })
 
@@ -73,7 +73,7 @@ export const createOrderAction = (data) => async (dispatch, getState) => {
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'post',
-            url: "http://localhost:8000/api/create-orders/",
+            url: `${API_HOST}/api/create-orders/`,
             data: data
         })
 
@@ -93,7 +93,7 @@ export const suppliedOrderAction = (order_supplied_id, data) => async (dispatch,
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'patch',
-            url: `http://localhost:8000/api/orders-supplied/${order_supplied_id}/`,
+            url: `${API_HOST}/api/orders-supplied/${order_supplied_id}/`,
             data: data
         })
 

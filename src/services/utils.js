@@ -42,4 +42,6 @@ export const signOut = () => {
   Cookies.remove('jwt_refresh_token')
 }
 
+export const API_HOST = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:8000' : 'https://api.fabtecuida.cl';
+
 

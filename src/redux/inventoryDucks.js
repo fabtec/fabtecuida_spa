@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { verifyTokenAction } from './authDucks';
-import { getAuthHeaders } from '../services/utils'
+import { getAuthHeaders, API_HOST } from '../services/utils'
 
 const initData = {
     array : []
@@ -36,7 +36,7 @@ export const getInventoryAction = (params = null) => async (dispatch, getState) 
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'get',
-            url: "http://localhost:8000/api/supplier-inventory/",
+            url: `${API_HOST}/api/supplier-inventory/`,
             params: params || {}
         })
 
@@ -56,7 +56,7 @@ export const addInventoryAction = ({ supplier, item, quantity }) => async (dispa
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'post',
-            url: "http://localhost:8000/api/supplier-inventory/",
+            url: `${API_HOST}/api/supplier-inventory/`,
             data: { supplier, item, quantity }
         })
 
