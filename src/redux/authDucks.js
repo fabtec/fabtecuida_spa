@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie'
-import { writeCookie } from '../services/utils';
+import { writeCookie, API_HOST } from '../services/utils';
 
 const initData = {
     loading: true,
@@ -42,7 +42,7 @@ export const loginAction = (username, password) => async(dispatch) => {
     })
 
     try {
-        const res = await axios.post("http://localhost:8000/api/token/",{
+        const res = await axios.post(`${API_HOST}/api/token/`,{
             username: username,
             password: password
         })
@@ -75,7 +75,7 @@ export const refreshTokenAction = () => async(dispatch) => {
     })
 
     try {
-        const res = await axios.post("http://localhost:8000/api/token/refresh/",{
+        const res = await axios.post(`${API_HOST}/api/token/refresh/`,{
             refresh: Cookies.get('jwt_refresh_token')
         })
 
@@ -108,7 +108,7 @@ export const verifyTokenAction = () => async(dispatch) => {
     
     if(Cookies.get('jwt_access_token')!=null){
         try {
-            await axios.post("http://localhost:8000/api/token/verify/",{
+            await axios.post(`${API_HOST}/api/token/verify/`,{
                 token: Cookies.get('jwt_access_token')
             })
     

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { verifyTokenAction } from './authDucks';
-import { getAuthHeaders } from '../services/utils'
+import { getAuthHeaders, API_HOST } from '../services/utils'
 
 const initData = {
     array : []
@@ -25,7 +25,7 @@ export const getUserAction = () => async (dispatch, getState) => {
         const res = await axios({
             headers: getAuthHeaders(),
             method: 'post',
-            url: "http://localhost:8000/api/token/user/"
+            url: `${API_HOST}/api/token/user/`
         })
 
         dispatch({
